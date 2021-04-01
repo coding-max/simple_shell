@@ -8,7 +8,7 @@
 
 - getpid (man 2 getpid)  
 `pid_t getpid(void)` returns the process ID (PID) of the calling process  
-<br>
+
 - getline (man 3 getline)  
 `ssize_t getline(char **restrict lineptr, size_t *restrict n, FILE *restrict stream)` delimited string input.  
 Return: On success the number of characters read, including the delimiter character, but not the ‘\0’, -1 on failure to read a line.  
