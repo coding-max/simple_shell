@@ -6,20 +6,20 @@
 
 ### Allowed functions and system calls:
 
-- getpid (man 2 getpid)
-`pid_t getpid(void)` returns the process ID (PID) of the calling process
+- getpid (man 2 getpid)  
+`pid_t getpid(void)` returns the process ID (PID) of the calling process  
 <br>
-- getline (man 3 getline)
-`ssize_t getline(char **restrict lineptr, size_t *restrict n, FILE *restrict stream)` delimited string input.
-Return: On success the number of characters read, including the delimiter character, but not the ‘\0’, -1 on failure to read a line.
+- getline (man 3 getline)  
+`ssize_t getline(char **restrict lineptr, size_t *restrict n, FILE *restrict stream)` delimited string input.  
+Return: On success the number of characters read, including the delimiter character, but not the ‘\0’, -1 on failure to read a line.  
 <br>
-- getcwd (man 3 getcwd)
-`char *getcwd(char *buf, size_t size)` get current working directory
-Return: pointer to a string containing the pathname of the current working directory. On failure, these functions return NULL.
+- getcwd (man 3 getcwd)  
+`char *getcwd(char *buf, size_t size)` get current working directory  
+Return: pointer to a string containing the pathname of the current working directory. On failure, these functions return NULL.  
 <br>
-- execve (man 2 execve) 
-`int execve(const char *pathname, char *const argv[], char *const envp[])` executes the program referred to by pathname.  This causes the program that is currently being run by the calling process to be replaced with a new program.
-Return: -1 error.
+- execve (man 2 execve)  
+`int execve(const char *pathname, char *const argv[], char *const envp[])` executes the program referred to by pathname. This causes the program that is currently being run by the calling process to be replaced with a new program.  
+Return: -1 error.  
 <br>
 - fork (man 2 fork)
 `pid_t fork(void)` creates a new process by duplicating the calling process.
