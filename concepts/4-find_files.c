@@ -8,7 +8,6 @@ int main(int ac, char **av)
     unsigned int i;
     struct stat st;
 
-    printf("the PATH is: %s\n", __FILE__);
     if (ac < 2)
     {
         printf("Usage: %s path_to_file ...\n", av[0]);
@@ -18,7 +17,7 @@ int main(int ac, char **av)
     while (av[i])
     {
         printf("%s:", av[i]);
-        if (stat(__FILE__, &st) == 0)
+        if (stat(av[i], &st) == 0)
         {
             printf(" FOUND\n");
         }
