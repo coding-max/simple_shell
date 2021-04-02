@@ -101,10 +101,16 @@ Return: a pointer to the next token, or NULL if there are no more tokens.
 `int isatty(int fd)` test whether a file descriptor refers to a terminal.  
 Return: 1 if fd is an open file descriptor referring to a terminal; otherwise 0 is returned.  
 
-- signal (man 2 signal)  
-
 - stat (__xstat) (man 2 stat)  
+`int stat(const char *path, struct stat *buf)` It fills the buffer buf with the status information of the specified file.  
+Return: if successful returns status info, on error it returns -1.  
 
 - lstat (__lxstat) (man 2 lstat)  
+`int fstat(int fd, struct stat *buf)` It is the same as the stat() system call. Instead of the filename, it accepts the file descriptor and fills the buffer buf with its status information.  
+Return: if successful returns status info, on error it returns -1.  
 
 - fstat (__fxstat) (man 2 fstat)  
+`int lstat(const char *path, struct stat *buf)` It returns information about a symbolic link rather than the file that it references.  
+Return: if successful returns status info, on error it returns -1.  
+
+- signal (man 2 signal)  
