@@ -13,4 +13,7 @@
 int only_execute(char *input_buffer);
 int start_shell(char **env);
 
+
+/* string_aux */
+int _strtwins(char *s1, char *s2);
 #endif
