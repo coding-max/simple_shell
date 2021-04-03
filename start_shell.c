@@ -9,17 +9,30 @@ int start_shell(char **env)
 {
 	size_t len = 0;
 	char *input_buffer = NULL;
-	char *input = NULL;
+	char *input[] = {"", NULL};
+	int pid, status;
 
 	while (1)
 	{
-		printf("baby_shell# ");
+		write(STDOUT_FILENO, "baby_shell# ", 12);
 		getline(&input_buffer, &len, stdin);
-		input = strtok(input_buffer, "\n");
-		printf("%s\n", input);
+		if (!_strtwins(input_buffer, "\n"))
+		{
+			input[0] = strtok(input_buffer, "\n");
 
-		if (!strcmp(input, "exit"))
-			break;
+			if (_strtwins(input[0], "exit"))
+				break;
+
+			pid = fork();
+			if (pid == 0)
+			{
+    			if (execve(input[0], input, NULL) == -1)
+				write(STDOUT_FILENO, "No such file or directory\n", 27);
+				break;
+			}
+			else
+				wait(&status);
+		}
 	}
 
 	free(input_buffer);
