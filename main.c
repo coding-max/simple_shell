@@ -4,6 +4,8 @@
  * main - exacute the interactive or non-interactive mode of the shell.
  * @ac: argument count.
  * @av: argument vector.
+ * @env: environment variable.
+ * Return: always 0 (success).
  */
 int main(int ac, char **av, char **env)
 {

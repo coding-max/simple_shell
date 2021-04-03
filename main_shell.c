@@ -26,8 +26,8 @@ int start_shell(char **env)
 			pid = fork();
 			if (pid == 0)
 			{
-    			if (execve(input[0], input, NULL) == -1)
-				write(STDOUT_FILENO, "No such file or directory\n", 27);
+				if (execve(input[0], input, NULL) == -1)
+					write(STDOUT_FILENO, "No such file or directory\n", 27);
 				break;
 			}
 			else
@@ -52,11 +52,11 @@ int only_execute(char *input_buffer)
 	pid = fork();
 	if (pid == 0)
 	{
-    	if (execve(input[0], input, NULL) == -1)
+		if (execve(input[0], input, NULL) == -1)
 			write(STDOUT_FILENO, "No such file or directory\n", 27);
 	}
 	else
 		wait(&status);
-	
+
 	return (0);
 }
