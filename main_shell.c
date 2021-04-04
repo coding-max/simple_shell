@@ -1,32 +1,34 @@
 #include "shell.h"
 
-// TODO add comments
 /**
- * start_shell - idk.
+ * start_shell - runs the interactive shell.
  * @env: environment variable.
  * Return: always 0 (success).
  */
-int start_shell(char **env)
+int start_shell(void)
 {
 	size_t len = 0;
 	char *input_buffer = NULL;
 	char **input;
-	int status, i = 0;
+	int status;
 	int pid = getpid();
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "baby_shell# ", 12);
 		getline(&input_buffer, &len, stdin);
-		if (!_strtwins(input_buffer, "\n")) // TODO same applies when input are only spaces
+		/* if buffer only contains \n will show prompt again */
+		if (!_strtwins(input_buffer, "\n"))
+		/* TODO same applies when input are only spaces */
 		{
 			input = create_argv(input_buffer);
 
-			// * temp condition to end program
+			/* // * temp condition to end program */
 			if (_strtwins(input[0], "exit"))
 				break;
-			
+
 			pid = fork();
+			/* child process executes command, father process waits */
 			if (pid == 0)
 			{
 				if (execve(input[0], input, NULL) == -1)
@@ -45,10 +47,9 @@ int start_shell(char **env)
 	return (0);
 }
 
-// TODO test handle command lines with arguments
 /**
- * only_execute - idk.
- * @input_buffer: program to execute.
+ * only_execute - executes a command line.
+ * @input_buffer: command line to execute.
  * Return: always 0 (success).
  */
 int only_execute(char *input_buffer)
@@ -58,6 +59,7 @@ int only_execute(char *input_buffer)
 
 	input = create_argv(input_buffer);
 	pid = fork();
+	/* child process executes command, father process waits */
 	if (pid == 0)
 	{
 		if (execve(input[0], input, NULL) == -1)

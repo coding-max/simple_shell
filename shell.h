@@ -11,7 +11,7 @@
 
 /* calls in main */
 int only_execute(char *input_buffer);
-int start_shell(char **env);
+int start_shell(void);
 
 
 /* functions in aux_strings.c */ //* 4/5
