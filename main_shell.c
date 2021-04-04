@@ -18,7 +18,7 @@ int start_shell(char **env)
 	{
 		write(STDOUT_FILENO, "baby_shell# ", 12);
 		getline(&input_buffer, &len, stdin);
-		if (!_strtwins(input_buffer, "\n"))
+		if (!_strtwins(input_buffer, "\n")) // TODO same applies when input are only spaces
 		{
 			input = create_argv(input_buffer);
 
