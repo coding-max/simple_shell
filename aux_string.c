@@ -1,28 +1,6 @@
 #include "shell.h"
 
 /**
- * _strtwins - compares two strings.
- * @s1: string 1.
- * @s2: string 2.
- * Return: 0 if s1 == s2, -1 if s1 != s2.
- */
-int _strtwins(char *s1, char *s2)
-{
-	int i = 0;
-
-	while ((s1[i] != '\0' && s2[i] != '\0'))
-	{
-		if (s1[i] != s2[i])
-			return (0);
-		i++;
-	}
-	if (s1[i] != s2[i])
-		return (0);
-
-	return (1);
-}
-
-/**
  * _strlen - returns the length of a string.
  * @s: string.
  * Return: Length of @s.
@@ -73,4 +51,26 @@ char *_strdup(char *str)
 	if (aux == NULL)
 		return (NULL);
 	return (_strcpy(aux, str));
+}
+
+/**
+ * not_empty - checks if buffer contains only spaces
+ * @input_buffer: command line to be executed
+ * Return: 0 if input_buffer contains only spaces, -1 if contains another char.
+ */
+int not_empty(char *input_buffer)
+{
+	int i = 0;
+	int boolean = 0;
+
+	while (input_buffer[i])
+	{
+		if (input_buffer[i] != ' ')
+			break;
+		i++;
+	}
+	if (input_buffer[i] && input_buffer[i] != '\n')
+		boolean = -1;
+
+	return (boolean);
 }

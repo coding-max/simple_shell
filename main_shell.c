@@ -17,9 +17,8 @@ int start_shell(void)
 	{
 		write(STDOUT_FILENO, "baby_shell# ", 12);
 		getline(&input_buffer, &len, stdin);
-		/* if buffer only contains \n will show prompt again */
-		if (!_strtwins(input_buffer, "\n"))
-		/* TODO same applies when input are only spaces */
+		/* if buffer only contains spaces or the \n char will show prompt again */
+		if (not_empty(input_buffer))
 		{
 			input = create_argv(input_buffer);
 

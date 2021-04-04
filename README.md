@@ -10,7 +10,7 @@
 `int only_execute(char *input_buffer)`  
 
 - aux_string.c  
-`int _strtwins(char *s1, char *s2)`  
+`int not_empty(char *input_buffer)`  
 `int _strlen(char *s)`  
 `char *_strcpy(char *dest, char *src)`  
 `char *_strdup(char *str)`  
