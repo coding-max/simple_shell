@@ -44,7 +44,7 @@ int start_shell(char **env)
 	return (0);
 }
 
-// TODO handle command lines with arguments
+// TODO test handle command lines with arguments
 /**
  * only_execute - idk.
  * @input_buffer: program to execute.
@@ -52,9 +52,10 @@ int start_shell(char **env)
  */
 int only_execute(char *input_buffer)
 {
-	char *input[] = {input_buffer, NULL};
+	char **input;
 	int pid, status;
 
+	input = create_argv(input_buffer);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -64,5 +65,6 @@ int only_execute(char *input_buffer)
 	else
 		wait(&status);
 
+	free_argv(input);
 	return (0);
 }
