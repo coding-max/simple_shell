@@ -14,11 +14,10 @@ int only_execute(char *input_buffer);
 int start_shell(char **env);
 
 
-/* functions in aux_strings.c */ //* full
+/* string_aux */
 int _strtwins(char *s1, char *s2);
+char **_strtoargv(char *input_buffer);
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
-char **_strtoargv(char *input_buffer);
-
 #endif

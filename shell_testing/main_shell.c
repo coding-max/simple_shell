@@ -1,6 +1,5 @@
 #include "shell.h"
 
-// TODO add comments
 /**
  * start_shell - idk.
  * @env: environment variable.
@@ -20,22 +19,43 @@ int start_shell(char **env)
 		getline(&input_buffer, &len, stdin);
 		if (!_strtwins(input_buffer, "\n"))
 		{
+			//* test
+			printf("\nstrat_shell runing...\n");
+			printf("start_shell -> getline = %s\n", input_buffer);
 			input = _strtoargv(input_buffer);
 
-			if (_strtwins(input[0], "exit"))
-				break;
+			//*  checks correct output of argv input
+			printf("\nstrat_shell runing...\n");
+			i = 0;
+			while (input[i])
+			{
+				printf("strat_shell -> argv[%i] = %s\n", i, input[i]);
+				i++;
+			}
+			printf("strat_shell -> argv[%i] = %s\n", i, input[i]);
+
+			printf("temp.... before \"exit\" i=%i\n", i);
 			
+			if (_strtwins(input[0], "exit"))
+			{
+				printf("strat_shell -> process %i exit loop\n", pid);
+				break;
+			}
+			
+			printf("temp.... after \"exit\"\n");
+			printf("strat_shell -> fork\n");
 			pid = fork();
 			if (pid == 0)
 			{
 				if (execve(input[0], input, NULL) == -1)
 					write(STDOUT_FILENO, "No such file or directory\n", 27);
+				printf("strat_shell -> process %i exit loop\n", pid);
 				break;
 			}
 			else
 				wait(&status);
 
-			// TODO create auxiliar function (clean_argv)
+			// TODO auxiliar function (clean_argv)
 			i = 0;
 			while(input[i])
 			{
@@ -43,10 +63,10 @@ int start_shell(char **env)
 				i++;
 			}
 			free(input);
+
 		}
 	}
 
-	// TODO create auxiliar function (clean_argv)
 	i = 0;
 	while(input[i])
 	{
@@ -54,12 +74,12 @@ int start_shell(char **env)
 		i++;
 	}
 	free(input);
-
 	free(input_buffer);
+
+	printf("strat_shell -> process %i closed...\n", pid);
 	return (0);
 }
 
-// TODO handle command lines with arguments
 /**
  * only_execute - idk.
  * @input_buffer: program to execute.

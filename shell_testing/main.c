@@ -1,6 +1,5 @@
 #include "shell.h"
 
-// TODO update flowchart
 /**
  * main - exacute the interactive or non-interactive mode of the shell.
  * @ac: argument count.
