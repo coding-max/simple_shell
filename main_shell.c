@@ -20,7 +20,7 @@ int start_shell(char **env)
 		getline(&input_buffer, &len, stdin);
 		if (!_strtwins(input_buffer, "\n"))
 		{
-			input = _strtoargv(input_buffer);
+			input = create_argv(input_buffer);
 
 			if (_strtwins(input[0], "exit"))
 				break;
@@ -35,26 +35,11 @@ int start_shell(char **env)
 			else
 				wait(&status);
 
-			// TODO create auxiliar function (clean_argv)
-			i = 0;
-			while(input[i])
-			{
-				free(input[i]);
-				i++;
-			}
-			free(input);
+			free_argv(input);
 		}
 	}
 
-	// TODO create auxiliar function (clean_argv)
-	i = 0;
-	while(input[i])
-	{
-		free(input[i]);
-		i++;
-	}
-	free(input);
-
+	free_argv(input);
 	free(input_buffer);
 	return (0);
 }

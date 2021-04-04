@@ -22,7 +22,7 @@ int start_shell(char **env)
 			//* test
 			printf("\nstrat_shell runing...\n");
 			printf("start_shell -> getline = %s\n", input_buffer);
-			input = _strtoargv(input_buffer);
+			input = create_argv(input_buffer);
 
 			//*  checks correct output of argv input
 			printf("\nstrat_shell runing...\n");
