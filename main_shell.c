@@ -22,6 +22,7 @@ int start_shell(char **env)
 		{
 			input = create_argv(input_buffer);
 
+			// * temp condition to end program
 			if (_strtwins(input[0], "exit"))
 				break;
 			
