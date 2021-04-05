@@ -14,8 +14,9 @@ int only_execute(char *input_buffer);
 int start_shell(void);
 
 
-/* functions in aux_strings.c // * 4/5 */
+/* functions in aux_strings.c // * full */
 int not_empty(char *input_buffer);
+int _strtwins(char *s1, char *s2);
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
