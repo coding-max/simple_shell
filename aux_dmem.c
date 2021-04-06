@@ -61,12 +61,12 @@ char *get_path(char *input_buffer, list_t **path)
 		aux = concat(list_pointer->dir, slash_command);
 		if (stat(aux, &status) == 0)
 			break;
-		if (aux)
+		// if (aux)
 		// free(aux);
 		list_pointer = list_pointer->next;
 	}
 	/* check if command is executable */
-	if (stat(aux, &status) == 0)
+	if (aux != NULL && stat(aux, &status) == 0)
 	{
 		style3();
 		printf("command (%s) it's executable\n", aux);
@@ -89,6 +89,7 @@ char *get_path(char *input_buffer, list_t **path)
 	printf("command: (%s) it's NOT executable\n", aux);
 	style3();
 	printf("command to return:(%s)\n", aux);
+
 	free(aux);
 	free(slash_input);
 	free(slash_command); 
@@ -119,7 +120,7 @@ char **create_argv(char *input_buffer, list_t **path)
 
 	style2();
 	printf("input_buffer = %s", input_buffer);
-	new_input = get_path(input_buffer, path);
+	new_input = input_buffer; // get_path(input_buffer, path);
 	style2();
 	printf("\n");
 	style2();
@@ -177,6 +178,7 @@ char **create_argv(char *input_buffer, list_t **path)
 	PURPLE;
 	printf("create_argv clossing...\n");
 	RESET;
+	// free(new_input); TODO
 	return (argv);
 }
 
