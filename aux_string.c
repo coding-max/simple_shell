@@ -107,5 +107,5 @@ char* concat(const char *s1, const char *s2)
     // in real code you would check for errors in malloc here
     strcpy(result, s1);
     strcat(result, s2);
-    return result;
+    return (result);
 }
