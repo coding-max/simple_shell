@@ -16,28 +16,24 @@ int main(void)
 
 	GREEN;
 	printf("\nmain running...\n");
-	printf("|");
 	RESET;
 	path = list_path();
-	GREEN;
-	printf("|\n|\n");
-	RESET
 	if (0)
 	{
 		free_list(path);
 		return (0);
 	}
-
 	if (!isatty(0))
 	{
 		/* reads stdin if arguments are passed with pipeline */
 		getline(&stdin_buffer, &len, stdin);
+
 		return (only_execute(stdin_buffer, path));
 	}
 	/* starts interactive shell */
 	aux = start_shell(path);
 	free_list(path);
-	GREEN;
+	RED;
 	printf("main clossing...\n");
 	RESET;
 	return (aux);
