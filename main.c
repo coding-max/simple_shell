@@ -11,13 +11,22 @@ int main(void)
 {
 	size_t len = 0;
 	char *stdin_buffer = NULL;
+	list_t *path;
+	int aux;
 
+	path = list_path();
 	if (!isatty(0))
 	{
 		/* reads stdin if arguments are passed with pipeline */
 		getline(&stdin_buffer, &len, stdin);
-		return (only_execute(stdin_buffer));
+
+		return (only_execute(stdin_buffer, path));
 	}
 	/* starts interactive shell */
-	return (start_shell());
+	aux = start_shell(path);
+	free_list(path);
+	RED;
+	printf("main clossing...\n");
+	RESET;
+	return (aux);
 }

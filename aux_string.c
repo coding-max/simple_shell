@@ -1,24 +1,6 @@
 #include "shell.h"
 
 /**
- * _strlen - returns the length of a string.
- * @s: string.
- * Return: Length of @s.
- */
-int _strlen(char *s)
-{
-	int i = 0;
-	int cont = 0;
-
-	while (s[i] != '\0')
-	{
-		cont++;
-		i++;
-	}
-	return (cont);
-}
-
-/**
  * _strcpy - copy the string pointed to by src inluding the null byte
  * to the buffer pointed to by dest.
  * @dest: destination.
@@ -85,14 +67,45 @@ int _strtwins(char *s1, char *s2)
 {
 	int i = 0;
 
-	while ((s1[i] != '\0' && s2[i] != '\0'))
+	while (s1[i] && s2[i])
 	{
 		if (s1[i] != s2[i])
-			return (0);
+			return (-1);
 		i++;
 	}
 	if (s1[i] != s2[i])
-		return (0);
+		return (-1);
 
-	return (1);
+	return (0);
+}
+
+/**
+ * _strlen - returns the length of a string.
+ * @s: string.
+ *
+ * Return: Length of @s.
+ */
+int _strlen(char *s)
+{
+	int i = 0;
+	int cont = 0;
+
+	if (s == NULL)
+		return (0);
+	while (s[i] != '\0')
+	{
+		cont++;
+		i++;
+	}
+	return (cont);
+}
+
+
+char* concat(const char *s1, const char *s2)
+{
+    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
+    // in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
 }
