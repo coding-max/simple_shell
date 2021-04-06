@@ -124,9 +124,9 @@ char *get_path(char *input_buffer, list_t **path)
 	list_t *list_pointer = *path; 
 	int i = 0;
 
-GREEN;
+	GREEN;
 	printf("\nget_path runing...\n");
-RESET;
+	RESET;
 	printf("get_path -> path = %s.\n", (*path)->dir);
 
 	input = strdup(input_buffer);
@@ -142,30 +142,30 @@ RESET;
 	printf("get_path -> command = %s.\n", command);
 
 	BLUE;
-	/* comprueba si el primer argumento es ejecutable */	
-	if (stat(command, &status) == 0)
-	{
-		printf("get_path -> command es ejecutable.\n");
-		return (command);
-	}
-	printf("get_path -> command no es ejecutable.\n");
-	RESET;
-
+	/* check if the first argument is executable */	
+	if (stat(command, &status) == 0) 
+	{ 
+		printf("get_path -> command executable.\n");
+		return (command); 
+	} 
+	printf("get_path -> command NOT excutable.\n");
+	RESET; 
+ 
 	slash_command = concat("/", command);
 	slash_input = concat("/", input);
 	printf("get_path -> slash_command = %s.\n", slash_command);
 	printf("get_path -> slash_input = %s.\n", slash_input);
-	while (list_pointer) /* no llegue al final de la lista */
+	while (list_pointer) /* does not reach the end of the list */
 	{
-		/* comprobar si el comando es ejecutable en el directorio */
+		/* check if command is executable in $list_pointer->dir */
 		aux = concat(list_pointer->dir, slash_command);
 		if (stat(aux, &status) == 0)
 			break;
 		// free(aux);
 		list_pointer = list_pointer->next;
 	}
-	free(slash_command);
-	/* comprobar que es ejecutable */
+	free(slash_command); 
+	/* check if command is executable */
 	if (stat(aux, &status) == 0)
 	{
 		BLUE;
@@ -222,7 +222,8 @@ char **create_argv(char *input_buffer)
 		return (NULL);
 	}
 
-		current_string = strtok(input_buffer, "\n");
+	// TODO la func que busca el path no le quieta el \n antes de retornar?
+	current_string = strtok(input_buffer, "\n");
 	current_string = strtok(current_string, " ");
 	/* adds arguments to array */
 	while (ac < (argc + 1))
