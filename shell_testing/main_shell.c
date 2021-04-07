@@ -14,78 +14,53 @@ int start_shell(list_t *path)
 	int status;
 	int pid = getpid(), i = 0;
 
-	GREEN;
-	printf("|   ");
-	BLUE;
-	printf("start_shell runing...\n");
-	RESET;
+
+	open_start_shell();
 	while (1)
 	{
-		style1();
-		GREEN;
-		printf("baby_shell# ");
-		// write(STDOUT_FILENO, "baby_shell# ", 12);
-		RESET;
+		prompt(); // write(STDOUT_FILENO, "baby_shell# ", 12);
 		getline(&input_buffer, &len, stdin);
 		/* if buffer only contains spaces or the \n char will show prompt again */
 		if (not_empty(input_buffer))
 		{
-			style1();
-			printf("input_buffer not empty\n");
-			input = create_argv(input_buffer, &path); // TODO change after compile -> input_buffer
-			style1();
-			printf("\n");
+			debug_1_shell();
+			input = create_argv(input_buffer, &path);
+			debug_2_shell();
 
 			/* // * temp condition to end program */
 			if (!_strtwins(input[0], "exit"))
 			{
-				style1();
-				BLUE;
-				printf("exit condition detected\n");
-				RESET;
+				debug_3_shell();
 				break;
 			}
-			style1();
-			printf("fork\n");
+			debug_4_shell();
 			pid = fork();
 			/* child process executes command, father process waits */
 			if (pid == 0)
 			{
-				style1();
-				printf("process %i executing command: (%s)\n", pid, input[0]);
-				printf("=====================================================\n");
+				debug_5_shell(pid, input[0]);
 				if (execve(input[0], input, NULL) == -1)
 				{
 					write(STDOUT_FILENO, "No such file or directory\n", 27);
 				}
-				printf("=====================================================\n");
+				debug_6_shell();
 				break;
 			}
 			else
 				wait(&status);
-			printf("=====================================================\n");
-			style1();
-			printf("process %i cleaning temp input\n", pid);
-			style1();
-			printf("\n");
-			style1();
-			printf("\n");
+			debug_7_shell(pid);
 			free_argv(input);
 		}
 	}
-	style1();
-	printf("process %i cleaning input\n", pid);
+	debug_8_shell(pid);
 	free_argv(input);
-	style1();
-	printf("process %i cleaning input buffer\n", pid);
+	debug_9_shell(pid);
 	free(input_buffer);
-	RED;
-	style1();
-	printf("process %i clossing...\n", pid);
-	RESET;
+	close_start_shell(pid);
 	return (0);
 }
 
+// TODO handle the PATH on non-int mode
 /**
  * only_execute - executes a command line.
  * @input_buffer: command line to execute.

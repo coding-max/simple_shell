@@ -1,8 +1,5 @@
 #include "shell.h"
 
-/**
-* list_path - 
-*/
 list_t *list_path(void)
 {
 	list_t *head = NULL, *node = NULL, *temp = NULL;
@@ -12,11 +9,7 @@ list_t *list_path(void)
 	char *dir, *aux;
 	int i = 0;
 
-	GREEN;
-	printf("\n|   ");
-	BLUE;
-	printf("list_path runnig...\n");
-	RESET;
+	open_list_path();
 	while (environ[i])
 	{
 		var_name = strtok(environ[i], "=");
@@ -27,7 +20,6 @@ list_t *list_path(void)
 		}
 		i++;
 	}
-
 	if (var_value)
 	{
 		i = 0;
@@ -37,7 +29,7 @@ list_t *list_path(void)
 			dir = strdup(aux);
 			head = add_to_list(&head, dir);
 			style1();
-			printf("%p -> dir[%i] = %s\n", &head->dir, i, head->dir);
+			printf("dir[%i] = %s\n", i, head->dir);
 			aux = strtok(NULL, ":");
 		}
 		temp = head;
@@ -48,18 +40,13 @@ list_t *list_path(void)
 			node = add_to_list(&head, dir);
 			temp = temp->next;
 			style1();
-			printf("%p -> dir[%i] = %s\n", &temp->dir, i, temp->dir);
+			printf("dir[%i] = %s\n", i, temp->dir);
 			aux = strtok(NULL, ":");
 		}
-		/* TODO añadir ultimo dir en PATH */
 	}
 	else
 	printf("     list_path -> ERROR: var_value NULL\n");
-	GREEN;
-	printf("|   ");
-	BLUE;
-	printf("list_path clossing...\n");
-	RESET;
+	close_list_path();
 	return (head);
 }
 

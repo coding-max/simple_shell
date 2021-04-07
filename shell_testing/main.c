@@ -10,24 +10,13 @@
 int main(void)
 {
 	size_t len = 0;
-	char *stdin_buffer = NULL;
 	list_t *path;
+	char *stdin_buffer = NULL;
 	int aux;
 
-	GREEN;
-	printf("\nmain running...\n");
-	printf("|");
-	RESET;
+	open_main(); 
 	path = list_path();
-	GREEN;
-	printf("|\n|\n");
-	RESET
-	if (0)
-	{
-		free_list(path);
-		return (0);
-	}
-
+	debug_main1();
 	if (!isatty(0))
 	{
 		/* reads stdin if arguments are passed with pipeline */
@@ -37,8 +26,6 @@ int main(void)
 	/* starts interactive shell */
 	aux = start_shell(path);
 	free_list(path);
-	GREEN;
-	printf("main clossing...\n");
-	RESET;
+	close_main();
 	return (aux);
 }
