@@ -59,43 +59,47 @@ char **create_argv(char *input_buffer, list_t **path)
 char *get_path(char *input_buffer, list_t **path)
 {
 	char *input, *aux, *command = NULL;
-	char *slash_command, *slash_input;
+	char *slash_command, *slash_input, *buffer;
 	struct stat status;
 
+	input_buffer = clean_spaces(buffer);
 	input = strdup(input_buffer);
 	input = strtok(input, "\n");
+	free(input_buffer);
 
 	/* extrae el primer argumento de input */
-	command = strtok(input_buffer, "\n");
-	aux = strtok(command, " ");
-	if (aux)
+	aux = strdup(input);
+	command = strtok(aux, " ");
+	if (command == NULL)
 		command = aux;
 
 	/* check if the first argument is executable */
 	if (stat(command, &status) == 0)
 	{
+		free(aux);
 		return (input);
 	}
 
 	slash_command = concat("/", command);
 	slash_input = concat("/", input);
+	free(aux);
 
-	return (get_path_aux(aux, slash_command, slash_input, input, path));
+	return (get_path_aux(slash_command, slash_input, input, path));
 }
 
 /**
  * get_path_aux - auxiliary function for obtains directory path.
- * @aux: auxiliary string.
  * @slash_command: auxiliary string.
  * @slash_input: auxiliary string.
  * @input: auxiliary string.
  * @path: pointer to path directory list.
  * Return: directory with concatenated input buffer.
  */
-char *get_path_aux(char *aux, char *slash_command,
-			char *slash_input, char *input, list_t **path)
+char *get_path_aux(char *slash_command, char *slash_input,
+			char *input, list_t **path)
 {
 	list_t *list_pointer = *path;
+	char *aux;
 	struct stat status;
 
 	while (list_pointer) /* does not reach the end of the list */
@@ -121,6 +125,37 @@ char *get_path_aux(char *aux, char *slash_command,
 	free(slash_input);
 	free(slash_command);
 	return (input);
+}
+
+/**
+ * clean_spaces - remove spaces in the first position of the buffer.
+ * @buffer: buffer to be cleaned.
+ * Return: a new buffer equal without spaces in the first position(s).
+ */
+char *clean_spaces(char *buffer)
+{
+	int len, first_char_position, i = 0;
+	char *new_buffer, *true_buffer;
+
+	new_buffer = strdup(buffer);
+	if (new_buffer[0] != ' ')
+		return (new_buffer);
+	while (new_buffer[i] == ' ')
+		i++;
+	first_char_position = i;
+	while (new_buffer[i])
+		i++;
+	len = i - first_char_position;
+	true_buffer = malloc(sizeof(char) * (len + 1));
+	i = first_char_position;
+	while (new_buffer[i])
+	{
+		true_buffer[i - first_char_position] = new_buffer[i];
+		i++;
+	}
+	true_buffer[i - first_char_position] = '\0';
+	free(new_buffer);
+	return (true_buffer);
 }
 
 /**
