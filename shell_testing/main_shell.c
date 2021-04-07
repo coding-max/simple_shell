@@ -2,7 +2,7 @@
 
 /**
  * start_shell - runs the interactive shell.
- * @env: environment variable.
+ * @path: pointer to the list of dir of the PATH.
  * Return: always 0 (success).
  */
 int start_shell(list_t *path)
@@ -60,10 +60,11 @@ int start_shell(list_t *path)
 	return (0);
 }
 
-// TODO handle the PATH on non-int mode
+/*// TODO handle the PATH on non-int mode */
 /**
  * only_execute - executes a command line.
  * @input_buffer: command line to execute.
+ * @path: pointer to the list of dir of the PATH.
  * Return: always 0 (success).
  */
 int only_execute(char *input_buffer, list_t *path)
