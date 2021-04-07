@@ -42,8 +42,7 @@ char *get_path(char *input_buffer, list_t **path)
 	{ 
 		style3();
 		printf("command executable.\n");
-		free(input);
-		return (command);  // TODO
+		return (input);  // TODO
 	}
 	style3();
 	printf("command NOT excutable.\n");
@@ -65,7 +64,7 @@ char *get_path(char *input_buffer, list_t **path)
 		list_pointer = list_pointer->next;
 	}
 	/* check if command is executable */
-	if (aux != NULL && (stat(aux, &status) == 0))
+	if (list_pointer && (stat(aux, &status) == 0))
 	{
 		style3();
 		printf("command (%s) it's executable\n", aux);
@@ -81,11 +80,11 @@ char *get_path(char *input_buffer, list_t **path)
 		RESET;
 		free(input);
 		free(slash_input);
-		free(slash_command); 
+		free(slash_command);
 		return (aux);
 	}
 	style3();
-	printf("command: (%s) it's NOT executable\n", aux);
+	printf("command: (%s) it's NOT executable in any directory\n", command);
 	style3();
 	printf("command to return:(%s)\n", input);
 
