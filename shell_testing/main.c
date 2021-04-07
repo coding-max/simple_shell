@@ -1,25 +1,44 @@
 #include "shell.h"
 
 /**
- * main - exacute the interactive or non-interactive mode of the shell.
+ * main - execute the interactive or non-interactive mode of the shell.
  * @ac: argument count.
  * @av: argument vector.
  * @env: environment variable.
  * Return: always 0 (success).
  */
-int main(int ac, char **av, char **env)
+int main(void)
 {
 	size_t len = 0;
 	char *stdin_buffer = NULL;
-	char *input_buffer = NULL;
+	list_t *path;
+	int aux;
+
+	GREEN;
+	printf("\nmain running...\n");
+	printf("|");
+	RESET;
+	path = list_path();
+	GREEN;
+	printf("|\n|\n");
+	RESET
+	if (0)
+	{
+		free_list(path);
+		return (0);
+	}
 
 	if (!isatty(0))
 	{
 		/* reads stdin if arguments are passed with pipeline */
 		getline(&stdin_buffer, &len, stdin);
-		input_buffer = strtok(stdin_buffer, "\n");
-		return (only_execute(input_buffer));
+		return (only_execute(stdin_buffer, path));
 	}
-	/* strat interactive shell */
-	return (start_shell(env));
+	/* starts interactive shell */
+	aux = start_shell(path);
+	free_list(path);
+	GREEN;
+	printf("main clossing...\n");
+	RESET;
+	return (aux);
 }
