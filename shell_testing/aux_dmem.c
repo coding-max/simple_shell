@@ -10,7 +10,7 @@ char **create_argv(char *input_buffer, list_t **path)
 	int i = 0,  ac = 0, argc = 1;
 	char *current_string, *str_to_put, *new_input;
 	char **argv;
-	
+
 	open_create_argv();
 	debug_1_argv(input_buffer);
 	new_input = get_path(input_buffer, path);
@@ -29,7 +29,6 @@ char **create_argv(char *input_buffer, list_t **path)
 			argc += 1;
 		i++;
 	}
-
 	debug_3_argv(argc);
 	argv = malloc(sizeof(char *) * (argc + 1));
 	if (argv == NULL)
@@ -50,7 +49,6 @@ char **create_argv(char *input_buffer, list_t **path)
 		ac++;
 
 	}
-
 	debug_4_argv(argv);
 	free(new_input);
 	close_create_argv();
@@ -58,17 +56,17 @@ char **create_argv(char *input_buffer, list_t **path)
 }
 
 /**
- * get_path - idk
- * @input_buffer: idk
- * @path: idk
- * Return: idk
+ * get_path - obtains directory path where command is executable.
+ * @input_buffer: entire command being passed.
+ * @path: pointer to path directory list.
+ * Return: directory with concatenated input buffer.
  */
 char *get_path(char *input_buffer, list_t **path)
 {
 	char *input, *aux, *command = NULL;
-	char* slash_command, *slash_input;
+	char *slash_command, *slash_input;
 	struct stat status;
-	list_t *list_pointer = *path; 
+	list_t *list_pointer = *path;
 	int i = 0;
 
 	open_get_path();
@@ -84,13 +82,13 @@ char *get_path(char *input_buffer, list_t **path)
 	debug_2_get_path(command);
 
 	/* check if the first argument is executable */	
-	if (stat(command, &status) == 0) 
-	{ 
+	if (stat(command, &status) == 0)
+	{
 		debug_3_get_path();
 		return (input);
 	}
 	debug_4_get_path();
- 
+
 	slash_command = concat("/", command);
 	slash_input = concat("/", input);
 	debug_5_get_path(slash_command, slash_input);
@@ -119,7 +117,7 @@ char *get_path(char *input_buffer, list_t **path)
 	}
 	debug_8_get_path(command, input);
 	free(slash_input);
-	free(slash_command); 
+	free(slash_command);
 	close_get_path();
 	return (input);
 }
