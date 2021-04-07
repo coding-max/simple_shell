@@ -2,12 +2,12 @@
 
 /**
  * list_path - create a list whith the direcories in the PATH.
+ * @environ: environment variable.
  * Return: a pointer to the new list.
  */
-list_t *list_path(void)
+list_t *list_path(char **environ)
 {
 	list_t *head = NULL, *temp = NULL;
-	extern char **environ;
 	char *var_name = NULL, *var_value = NULL;
 	char *dir, *aux;
 	int i = 0;

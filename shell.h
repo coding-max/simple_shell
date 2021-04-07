@@ -22,7 +22,7 @@ int only_execute(char *input_buffer, list_t *path);
 int start_shell(list_t *path);
 
 /* aux_list.c */
-list_t *list_path(void);
+list_t *list_path(char **env);
 list_t *add_to_list(list_t **head, char *dir);
 void free_list(list_t *head);
 

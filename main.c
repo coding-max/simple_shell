@@ -2,16 +2,20 @@
 
 /**
  * main - execute the interactive or non-interactive mode of the shell.
+ * @ac:argumen count (unused).
+ * @av:argument vector (unused).
+ * @env: environment variable.
  * Return: always 0 (success).
  */
-int main(void)
+int main(__attribute__((unused)) int ac,
+		__attribute__((unused)) char **av, char **env)
 {
 	size_t len = 0;
 	list_t *path;
 	char *stdin_buffer = NULL;
 	int aux;
 
-	path = list_path();
+	path = list_path(env);
 	if (!isatty(0))
 	{
 		/* reads stdin if arguments are passed with pipeline */
