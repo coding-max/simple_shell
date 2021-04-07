@@ -1,11 +1,14 @@
 #include "shell.h"
 
+/**
+ * list_path - create a list whith the direcories in the PATH.
+ * Return: a pointer to the new list.
+ */
 list_t *list_path(void)
 {
-	list_t *head = NULL, *node = NULL, *temp = NULL;
+	list_t *head = NULL, *temp = NULL;
 	extern char **environ;
-	char *var_name = NULL;
-	char *var_value = NULL;
+	char *var_name = NULL, *var_value = NULL;
 	char *dir, *aux;
 	int i = 0;
 
@@ -34,7 +37,7 @@ list_t *list_path(void)
 		{
 			i++;
 			dir = strdup(aux);
-			node = add_to_list(&head, dir);
+			add_to_list(&head, dir);
 			temp = temp->next;
 			aux = strtok(NULL, ":");
 		}
@@ -45,6 +48,12 @@ list_t *list_path(void)
 	return (head);
 }
 
+/**
+ * add_to_list - add a new node to the list.
+ * @head: pointer to the list.
+ * @dir: string to be placed in the new node.
+ * Return: pointer to the list.
+ */
 list_t *add_to_list(list_t **head, char *dir)
 {
 	list_t *new, *aux = *head;
@@ -71,9 +80,8 @@ list_t *add_to_list(list_t **head, char *dir)
 }
 
 /**
- * free_listint - free list
- * @head: head
- * Return: into the void
+ * free_list - free the list of direcories.
+ * @head: pinter to the list.
  */
 void free_list(list_t *head)
 {

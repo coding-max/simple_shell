@@ -9,10 +9,9 @@ int start_shell(list_t *path)
 {
 	size_t len = 0;
 	char *input_buffer = NULL;
-	char *input_buffer_with_path;
 	char **input;
 	int status;
-	int pid = getpid(), i = 0;
+	int pid = getpid();
 
 	while (1)
 	{

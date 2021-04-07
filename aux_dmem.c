@@ -3,6 +3,7 @@
 /**
  * create_argv - turns input_buffer into argument vector.
  * @input_buffer: input_buffer to be processed.
+ * @path: pointer to path directory list.
  * Return: a pointer to the new argument vector.
  */
 char **create_argv(char *input_buffer, list_t **path)
@@ -10,7 +11,7 @@ char **create_argv(char *input_buffer, list_t **path)
 	int i = 0,  ac = 0, argc = 1;
 	char *current_string, *str_to_put, *new_input;
 	char **argv;
-	
+
 	new_input = get_path(input_buffer, path);
 
 	while (new_input[i])
@@ -26,7 +27,6 @@ char **create_argv(char *input_buffer, list_t **path)
 			argc += 1;
 		i++;
 	}
-
 	argv = malloc(sizeof(char *) * (argc + 1));
 	if (argv == NULL)
 	{
@@ -46,24 +46,21 @@ char **create_argv(char *input_buffer, list_t **path)
 		ac++;
 
 	}
-
 	free(new_input);
 	return (argv);
 }
 
 /**
- * get_path - idk
- * @input_buffer: idk
- * @path: idk
- * Return: idk
+ * get_path - obtains directory path where command is executable.
+ * @input_buffer: entire command being passed.
+ * @path: pointer to path directory list.
+ * Return: directory with concatenated input buffer.
  */
 char *get_path(char *input_buffer, list_t **path)
 {
 	char *input, *aux, *command = NULL;
-	char* slash_command, *slash_input;
+	char *slash_command, *slash_input;
 	struct stat status;
-	list_t *list_pointer = *path; 
-	int i = 0;
 
 	input = strdup(input_buffer);
 	input = strtok(input, "\n");
@@ -74,14 +71,32 @@ char *get_path(char *input_buffer, list_t **path)
 	if (aux)
 		command = aux;
 
-	/* check if the first argument is executable */	
-	if (stat(command, &status) == 0) 
-	{ 
+	/* check if the first argument is executable */
+	if (stat(command, &status) == 0)
+	{
 		return (input);
 	}
- 
+
 	slash_command = concat("/", command);
 	slash_input = concat("/", input);
+
+	return (get_path_aux(aux, slash_command, slash_input, input, path));
+}
+
+/**
+ * get_path_aux - auxiliary function for obtains directory path.
+ * @aux: auxiliary string.
+ * @slash_command: auxiliary string.
+ * @slash_input: auxiliary string.
+ * @input: auxiliary string.
+ * @path: pointer to path directory list.
+ * Return: directory with concatenated input buffer.
+ */
+char *get_path_aux(char *aux, char *slash_command,
+			char *slash_input, char *input, list_t **path)
+{
+	list_t *list_pointer = *path;
+	struct stat status;
 
 	while (list_pointer) /* does not reach the end of the list */
 	{
@@ -104,7 +119,7 @@ char *get_path(char *input_buffer, list_t **path)
 		return (aux);
 	}
 	free(slash_input);
-	free(slash_command); 
+	free(slash_command);
 	return (input);
 }
 
