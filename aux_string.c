@@ -82,7 +82,6 @@ int _strtwins(char *s1, char *s2)
 /**
  * _strlen - returns the length of a string.
  * @s: string.
- *
  * Return: Length of @s.
  */
 int _strlen(char *s)
@@ -100,12 +99,17 @@ int _strlen(char *s)
 	return (cont);
 }
 
-
-char* concat(const char *s1, const char *s2)
+/**
+ * concat - // TODO.
+ * @s1: .
+ * @s2: .
+ * Return: .
+ */
+char *concat(const char *s1, const char *s2)
 {
-    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
-    // in real code you would check for errors in malloc here
-    strcpy(result, s1);
-    strcat(result, s2);
-    return (result);
+	char *result = malloc(strlen(s1) + strlen(s2) + 1);
+	/* TODO check for errors in malloc here */
+	strcpy(result, s1);
+	strcat(result, s2);
+	return (result);
 }

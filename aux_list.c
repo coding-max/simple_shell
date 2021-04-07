@@ -1,8 +1,5 @@
 #include "shell.h"
 
-/**
-* list_path - 
-*/
 list_t *list_path(void)
 {
 	list_t *head = NULL, *node = NULL, *temp = NULL;
@@ -12,11 +9,6 @@ list_t *list_path(void)
 	char *dir, *aux;
 	int i = 0;
 
-	GREEN;
-	printf("\n|   ");
-	BLUE;
-	printf("list_path runnig...\n");
-	RESET;
 	while (environ[i])
 	{
 		var_name = strtok(environ[i], "=");
@@ -27,7 +19,6 @@ list_t *list_path(void)
 		}
 		i++;
 	}
-
 	if (var_value)
 	{
 		i = 0;
@@ -36,8 +27,6 @@ list_t *list_path(void)
 		{
 			dir = strdup(aux);
 			head = add_to_list(&head, dir);
-			style1();
-			printf("%p -> dir[%i] = %s\n", &head->dir, i, head->dir);
 			aux = strtok(NULL, ":");
 		}
 		temp = head;
@@ -47,19 +36,12 @@ list_t *list_path(void)
 			dir = strdup(aux);
 			node = add_to_list(&head, dir);
 			temp = temp->next;
-			style1();
-			printf("%p -> dir[%i] = %s\n", &temp->dir, i, temp->dir);
 			aux = strtok(NULL, ":");
 		}
-		/* TODO añadir ultimo dir en PATH */
 	}
 	else
-	printf("     list_path -> ERROR: var_value NULL\n");
-	GREEN;
-	printf("|   ");
-	BLUE;
-	printf("list_path clossing...\n");
-	RESET;
+		printf("ERROR: var_value NULL\n");
+
 	return (head);
 }
 
@@ -70,7 +52,7 @@ list_t *add_to_list(list_t **head, char *dir)
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
 	{
-		printf("add_to_list -> ERROR: unable to allocate memory\n");
+		printf("ERROR: unable to allocate memory\n");
 		return (NULL);
 	}
 	new->dir = dir;
