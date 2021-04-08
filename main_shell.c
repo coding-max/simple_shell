@@ -11,7 +11,7 @@ int start_shell(list_t *path)
 	char *input_buffer = NULL;
 	char **input;
 	int status;
-	int pid = getpid();
+	pid_t pid = getpid();
 
 	while (1)
 	{
@@ -47,7 +47,6 @@ int start_shell(list_t *path)
 	return (0);
 }
 
-/*// TODO handle the PATH on non-int mode */
 /**
  * only_execute - executes a command line.
  * @input_buffer: command line to execute.
@@ -59,17 +58,20 @@ int only_execute(char *input_buffer, list_t *path)
 	char **input;
 	int pid, status;
 
-	input = create_argv(input_buffer, &path);
-	pid = fork();
-	/* child process executes command, father process waits */
-	if (pid == 0)
+	if (not_empty(input_buffer))
 	{
-		if (execve(input[0], input, NULL) == -1)
-			write(STDOUT_FILENO, "No such file or directory\n", 27);
+		input = create_argv(input_buffer, &path);
+		pid = fork();
+		/* child process executes command, father process waits */
+		if (pid == 0)
+		{
+			if (execve(input[0], input, NULL) == -1)
+				write(STDOUT_FILENO, "No such file or directory\n", 27);
+		}
+		else
+			wait(&status);
+		free_argv(input);
 	}
-	else
-		wait(&status);
 
-	free_argv(input);
 	return (0);
 }
