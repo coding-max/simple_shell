@@ -62,7 +62,6 @@ char *get_path(char *buffer, list_t **path)
 	char *slash_command, *slash_input, *input_buffer;
 	struct stat status;
 	list_t *list_pointer = *path;
-	int i = 0;
 
 	/* clean input in case that the first(s) chars are spaces */
 	input_buffer = clean_spaces(buffer);
@@ -89,11 +88,21 @@ char *get_path(char *buffer, list_t **path)
 	return (aux_get_path(list_pointer, slash_command, slash_input, input));
 }
 
-char *aux_get_path(list_t *list_pointer, char *slash_command, char *slash_input, char *input)
+
+/**
+ * aux_get_path - auxiliary function for obtains directory path.
+ * @list_pointer: pointer to directory in path list.
+ * @slash_command: auxiliary string.
+ * @slash_input: auxiliary string.
+ * @input: auxiliary string.
+ * Return: directory with concatenated input buffer.
+ */
+char *aux_get_path(list_t *list_pointer, char *slash_command,
+			char *slash_input, char *input)
 {
 	char *aux;
 	struct stat status;
-	
+
 	while (list_pointer) /* does not reach the end of the list */
 	{
 		/* check if command is executable in $list_pointer->dir */
