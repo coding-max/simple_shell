@@ -6,10 +6,10 @@
 			"label": "C/C++: gcc-9 build active file",
 			"command": "gcc",
 			"args": [
-				/*"-Wall",
+				"-Wall",
 				"-Werror",
 				"-Wextra",
-				"-pedantic",*/
+				"-pedantic",
 				"*.c",
 				"-o",
 				"baby_shell"
