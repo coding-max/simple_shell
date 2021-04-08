@@ -61,38 +61,50 @@ char **create_argv(char *input_buffer, list_t **path)
  * @path: pointer to path directory list.
  * Return: directory with concatenated input buffer.
  */
-char *get_path(char *input_buffer, list_t **path)
+char *get_path(char *buffer, list_t **path)
 {
 	char *input, *aux, *command = NULL;
-	char *slash_command, *slash_input;
+	char *slash_command, *slash_input, *input_buffer;
 	struct stat status;
 	list_t *list_pointer = *path;
 	int i = 0;
 
 	open_get_path();
+	/* clean input in case that the first(s) chars are spaces */
+	printf("--------> buffer = %s.\n", buffer);
+	input_buffer = clean_spaces(buffer); // TODO liberar memoria alocada en clean_spaces
+	printf("--------> input_buffer = %s.\n", input_buffer);
 	input = strdup(input_buffer);
+	printf("--------> input = %s.\n", input);
 	input = strtok(input, "\n");
-	debug_1_get_path(input_buffer, input);
-
+	printf("--------> input = %s.\n", input);
+	// debug_1_get_path(input_buffer, input);
+	free(input_buffer);
 	/* extrae el primer argumento de input */
-	command = strtok(input_buffer, "\n");
-	aux = strtok(command, " ");
-	if (aux)
+	aux = strdup(input);
+	printf("--------> aux = %s.\n", aux);
+	command = strtok(aux, " "); // TODO revisar
+	if (command == NULL)
 		command = aux;
-	debug_2_get_path(command);
+	printf("--------> command = %s.\n", command);
+	// debug_2_get_path(command);
 
 	/* check if the first argument is executable */	
 	if (stat(command, &status) == 0)
 	{
-		debug_3_get_path();
+		// debug_3_get_path();
+		free (aux);
 		return (input);
 	}
-	debug_4_get_path();
-
+	// debug_4_get_path();
+	printf("--------> PASO PRIMER STAT");
 	slash_command = concat("/", command);
+	printf("--------> slash_command = %s.\n", slash_command);
 	slash_input = concat("/", input);
-	debug_5_get_path(slash_command, slash_input);
+	printf("--------> slash_input = %s.\n", slash_input);
+	// debug_5_get_path(slash_command, slash_input);
 
+	free(aux);
 	while (list_pointer) /* does not reach the end of the list */
 	{
 		/* check if command is executable in $list_pointer->dir */
@@ -105,22 +117,55 @@ char *get_path(char *input_buffer, list_t **path)
 	/* check if command is executable */
 	if (list_pointer && (stat(aux, &status) == 0))
 	{
-		debug_6_get_path(aux);
+		//debug_6_get_path(aux);
 		/* concatenar el resto de argumentos */
 		free(aux);
 		aux = concat(list_pointer->dir, slash_input);
-		debug_7_get_path(aux);
+		//debug_7_get_path(aux);
 		free(input);
 		free(slash_input);
 		free(slash_command);
 		return (aux);
 	}
-	debug_8_get_path(command, input);
+	// debug_8_get_path(command, input);
 	free(slash_input);
 	free(slash_command);
-	close_get_path();
+	//close_get_path();
 	return (input);
 }
+
+/**
+ * clean_spaces : remove spaces in the first positions of the buffer.
+ * @buffer: buffer to clean.
+ * Return: a new buffer iqual without the spaces in the fisrt(s) positions.
+ */
+char *clean_spaces(char *buffer)
+{
+	int len, first_char_position, i = 0;
+	char *new_buffer, *true_buffer;
+
+	new_buffer = strdup(buffer);
+	if (new_buffer[0] != ' ')
+		return (new_buffer);
+	while (new_buffer[i] == ' ')
+		i++;
+	// i--;
+	first_char_position = i;
+	while (new_buffer[i])
+		i++;
+	len = i - first_char_position;
+	true_buffer = malloc(sizeof(char) * (len + 1));
+	i = first_char_position;
+	while (new_buffer[i])
+	{
+		true_buffer[i - first_char_position] = new_buffer[i];
+		i++;
+	}
+	true_buffer[i - first_char_position] = '\0';
+	free(new_buffer);
+	printf("------------> new_buffer = %s", true_buffer);
+	return (true_buffer);
+} 
 
 /**
  * free_argv - frees memory allocated in argument vector.
