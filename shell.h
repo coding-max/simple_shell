@@ -27,8 +27,8 @@ list_t *add_to_list(list_t **head, char *dir);
 void free_list(list_t *head);
 
 /* aux_dmem.c */
-char *get_path(char *input_buffer, list_t **path);
-char *get_path_aux(char *aux, char *slash_command, char *slash_input, char *input, list_t **path);
+char *get_path(char *buffer, list_t **path);
+char *aux_get_path(list_t *list_pointer, char *slash_command, char *slash_input, char *input);
 char *clean_spaces(char *buffer);
 char **create_argv(char *input_buffer, list_t **path);
 void free_argv(char **argv);

@@ -13,7 +13,6 @@ char **create_argv(char *input_buffer, list_t **path)
 	char **argv;
 
 	new_input = get_path(input_buffer, path);
-
 	while (new_input[i])
 	{
 		/**
@@ -27,6 +26,7 @@ char **create_argv(char *input_buffer, list_t **path)
 			argc += 1;
 		i++;
 	}
+
 	argv = malloc(sizeof(char *) * (argc + 1));
 	if (argv == NULL)
 	{
@@ -52,16 +52,19 @@ char **create_argv(char *input_buffer, list_t **path)
 
 /**
  * get_path - obtains directory path where command is executable.
- * @input_buffer: entire command being passed.
+ * @buffer: entire command being passed.
  * @path: pointer to path directory list.
  * Return: directory with concatenated input buffer.
  */
-char *get_path(char *input_buffer, list_t **path)
+char *get_path(char *buffer, list_t **path)
 {
 	char *input, *aux, *command = NULL;
-	char *slash_command, *slash_input, *buffer;
+	char *slash_command, *slash_input, *input_buffer;
 	struct stat status;
+	list_t *list_pointer = *path;
+	int i = 0;
 
+	/* clean input in case that the first(s) chars are spaces */
 	input_buffer = clean_spaces(buffer);
 	input = strdup(input_buffer);
 	input = strtok(input, "\n");
@@ -79,29 +82,18 @@ char *get_path(char *input_buffer, list_t **path)
 		free(aux);
 		return (input);
 	}
-
 	slash_command = concat("/", command);
 	slash_input = concat("/", input);
-	free(aux);
 
-	return (get_path_aux(slash_command, slash_input, input, path));
+	free(aux);
+	return (aux_get_path(list_pointer, slash_command, slash_input, input));
 }
 
-/**
- * get_path_aux - auxiliary function for obtains directory path.
- * @slash_command: auxiliary string.
- * @slash_input: auxiliary string.
- * @input: auxiliary string.
- * @path: pointer to path directory list.
- * Return: directory with concatenated input buffer.
- */
-char *get_path_aux(char *slash_command, char *slash_input,
-			char *input, list_t **path)
+char *aux_get_path(list_t *list_pointer, char *slash_command, char *slash_input, char *input)
 {
-	list_t *list_pointer = *path;
 	char *aux;
 	struct stat status;
-
+	
 	while (list_pointer) /* does not reach the end of the list */
 	{
 		/* check if command is executable in $list_pointer->dir */
