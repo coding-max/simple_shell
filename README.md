@@ -1,20 +1,30 @@
-<img style="text-align:center" src="https://github.com/coding-max/simple_shell/blob/develop/assets/flowchart.svg?raw=true" alt="flowchart of main.c"/>  
-
 ### Files:
 
 - main.c  
 `int main(int ac, char **av, char **env)`  
 
 - main_shell.c  
-`int start_shell(char **env)`  
-`int only_execute(char *input_buffer)`  
+`int only_execute(char *input_buffer, list_t *path)`  
+`int start_shell(list_t *path)`  
 
-- aux_string.c  
+- aux_list.c  
+`list_t *list_path(char **env)`  
+`list_t *add_to_list(list_t **head, char *dir)`  
+`void free_list(list_t *head)`  
+
+- aux_dmem.c  
+`char *get_path(char *buffer, list_t **path)`  
+`char *aux_get_path(list_t *list_pointer, char *slash_command, char *slash_input, char *input)`  
+`char *clean_spaces(char *buffer)`  
+`char **create_argv(char *input_buffer, list_t **path)`  
+`void free_argv(char **argv)`  
+
+- aux_str1.c  
 `int not_empty(char *input_buffer)`  
+`int _strtwins(char *s1, char *s2)`  
+
+- aux_str2.c  
 `int _strlen(char *s)`  
 `char *_strcpy(char *dest, char *src)`  
 `char *_strdup(char *str)`  
-
-- aux_dmem.c  
-`char **create_argv(char *input_buffer)`  
-`void free_argv(char **argv)`  
+`char* concat(const char *s1, const char *s2)`  
