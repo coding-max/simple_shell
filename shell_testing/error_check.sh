@@ -1,7 +1,7 @@
 #!/bin/bash
 # test suite for simple_shell project
-
-gcc -g -Wall -Werror -Wextra -pedantic ../shell_vdev/*.c -o hsh
+source log/config
+gcc -g -Wall -Werror -Wextra -pedantic $FOLDER/*.c -o hsh
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -32,7 +32,6 @@ function execute()
 		sleep 2
 		echo -e "${RED}test $TEST fails - DIFFERENCES:${NC}"
 		cat log/test$TEST
-		rm log/test$TEST
 		echo "------------------------------------------------------------------"
 		sleep 2
 		echo -e "${RED}test $TEST fails - SUMMARY:${NC}"
@@ -45,7 +44,7 @@ function execute()
 	fi
 }
 
-echo "Checking errors..."
+echo "Checking errors... in $FOLDER"
 sleep 1
 
 TEST=01

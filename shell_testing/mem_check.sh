@@ -1,7 +1,7 @@
 #!/bin/bash
 # test suite for simple_shell project
-
-gcc -g -Wall -Werror -Wextra -pedantic ../shell_vdev/*.c -o hsh
+source log/config
+gcc -g -Wall -Werror -Wextra -pedantic $FOLDER/*.c -o hsh
 
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -42,7 +42,7 @@ function execute()
 	esac
 }
 
-echo "Checking memory errors..."
+echo "Checking memory errors... in $FOLDER"
 sleep 1
 
 TEST=01
