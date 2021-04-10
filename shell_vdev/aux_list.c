@@ -28,7 +28,7 @@ list_t *list_path(char **environ)
 		aux = strtok(var_value, ":");
 		if (aux)
 		{
-			dir = strdup(aux);
+			dir = _strdup(aux);
 			head = add_to_list(&head, dir);
 			aux = strtok(NULL, ":");
 		}
@@ -36,7 +36,7 @@ list_t *list_path(char **environ)
 		while (aux)
 		{
 			i++;
-			dir = strdup(aux);
+			dir = _strdup(aux);
 			add_to_list(&head, dir);
 			temp = temp->next;
 			aux = strtok(NULL, ":");
