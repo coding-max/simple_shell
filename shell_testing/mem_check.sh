@@ -19,19 +19,30 @@ function execute()
 	RESULT=$(echo $DIFF | grep -c "identical")
 	if [ $RESULT -eq 1 ]
 	then
-		echo -e " test $TEST: [${GREEN}OK${NC}]"
-		if [ -f log/test$TEST ]
-		then
-			rm log/test$TEST
-		fi
+		echo -e "test $TEST: [${GREEN}OK${NC}]"
+		echo $COMMAND | valgrind --leak-check=full ./hsh
 	else
-		echo -e " test $TEST: [${RED}KO${NC}]"
-		sdiff log/expected/test$TEST log/obtained/test$TEST > log/test$TEST 2>&1
+		echo -e "test $TEST: [${RED}KO${NC}] --> ${RED}details:${NC} \"$COMMAND\""
+		echo $COMMAND | valgrind --leak-check=full ./hsh
 	fi
-	sleep 0.15
+	echo "Press x to exit or any other key to continue"
+	read NEXT
+	case $NEXT in
+	x)
+		rm -rf log/expected
+		rm -rf log/obtained
+		rm hsh
+		exit
+		;;
+	*)
+		echo ""
+		echo ""
+		echo ""
+		;;
+	esac
 }
 
-echo " Running test suite..."
+echo "Checking memory errors..."
 sleep 1
 
 TEST=01

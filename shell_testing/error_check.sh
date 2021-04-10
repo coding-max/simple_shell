@@ -17,21 +17,35 @@ function execute()
 	echo $COMMAND | ./hsh > log/obtained/test$TEST 2>&1
 	DIFF=$(diff -sq log/expected/test$TEST log/obtained/test$TEST)
 	RESULT=$(echo $DIFF | grep -c "identical")
-	if [ $RESULT -eq 1 ]
+	if [ $RESULT -ne 1 ]
 	then
-		echo -e " test $TEST: [${GREEN}OK${NC}]"
-		if [ -f log/test$TEST ]
-		then
-			rm log/test$TEST
-		fi
-	else
-		echo -e " test $TEST: [${RED}KO${NC}]"
-		sdiff log/expected/test$TEST log/obtained/test$TEST > log/test$TEST 2>&1
+		echo -e "${RED}test $TEST fails: \"$COMMAND\"${NC}"
+		echo "------------------------------------------------------------------"
+		sleep 2
+		echo -e "${RED}test $TEST fails - EXPECTED:${NC}"
+		$COMMAND
+		echo "------------------------------------------------------------------"
+		sleep 2
+		echo -e "${RED}test $TEST fails - OBTAINED:${NC}"
+		echo $COMMAND | ./hsh
+		echo "------------------------------------------------------------------"
+		sleep 2
+		echo -e "${RED}test $TEST fails - DIFFERENCES:${NC}"
+		cat log/test$TEST
+		rm log/test$TEST
+		echo "------------------------------------------------------------------"
+		sleep 2
+		echo -e "${RED}test $TEST fails - SUMMARY:${NC}"
+		echo $COMMAND | valgrind --leak-check=full ./hsh
+		echo "------------------------------------------------------------------"
+		rm -rf log/expected
+		rm -rf log/obtained
+		rm hsh
+		exit
 	fi
-	sleep 0.15
 }
 
-echo " Running test suite..."
+echo "Checking errors..."
 sleep 1
 
 TEST=01
