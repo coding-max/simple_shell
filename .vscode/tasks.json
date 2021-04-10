@@ -12,7 +12,7 @@
 				"-pedantic",
 				"*.c",
 				"-o",
-				"baby_shell"
+				"hsh"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
