@@ -65,12 +65,12 @@ char *get_path(char *buffer, list_t **path)
 
 	/* clean input in case that the first(s) chars are spaces */
 	input_buffer = clean_spaces(buffer);
-	input = strdup(input_buffer);
+	input =  _strdup(input_buffer);
 	input = strtok(input, "\n");
 	free(input_buffer);
 
 	/* extrae el primer argumento de input */
-	aux = strdup(input);
+	aux =  _strdup(input);
 	command = strtok(aux, " ");
 	if (command == NULL)
 		command = aux;
@@ -138,7 +138,7 @@ char *clean_spaces(char *buffer)
 	int len, first_char_position, i = 0;
 	char *new_buffer, *true_buffer;
 
-	new_buffer = strdup(buffer);
+	new_buffer =  _strdup(buffer);
 	if (new_buffer[0] != ' ')
 		return (new_buffer);
 	while (new_buffer[i] == ' ')

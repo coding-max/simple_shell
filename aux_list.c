@@ -23,11 +23,11 @@ list_t *list_path(char **env)
 	if (!environ)
 		return (NULL);
 
-	/* strdup a cada posicion en env */
+	/*  _strdup a cada posicion en env */
 	i = 0;
 	while (env[i])
 	{
-		environ[i] = strdup(env[i]);
+		environ[i] =  _strdup(env[i]);
 		i++;
 	}
 
@@ -48,7 +48,7 @@ list_t *list_path(char **env)
 		aux = strtok(var_value, ":");
 		if (aux)
 		{
-			dir = strdup(aux);
+			dir =  _strdup(aux);
 			head = add_to_list(&head, dir);
 			aux = strtok(NULL, ":");
 		}
@@ -56,7 +56,7 @@ list_t *list_path(char **env)
 		while (aux)
 		{
 			i++;
-			dir = strdup(aux);
+			dir =  _strdup(aux);
 			add_to_list(&head, dir);
 			temp = temp->next;
 			aux = strtok(NULL, ":");

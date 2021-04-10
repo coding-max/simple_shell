@@ -37,6 +37,30 @@ char *_strcpy(char *dest, char *src)
 	return (direction);
 }
 
+/* TODO */
+/**
+ * *_strcat - concatenates two strings.
+ * @dest: destination.
+ * @src: source.
+ *
+ * Return: pointer to the resulting string dest.
+ */
+char *_strcat(char *dest, char *src)
+{
+	int i, j = 0;
+	char *ptr = dest;
+
+	if (src == NULL)
+		return (ptr);
+	for (i = 0; dest[i] != '\0'; i++)
+	{
+	}
+	for (; src[j] != '\0'; i++, j++)
+		dest[i] = src[j];
+	dest[i + 1] = src[j + 1];
+	return (ptr);
+}
+
 /**
  * _strdup - returns a pointer to a new string which is a duplicate of str.
  * @str: source string to duplicate.
@@ -61,11 +85,11 @@ char *_strdup(char *str)
  * @s2: .
  * Return: .
  */
-char *concat(const char *s1, const char *s2)
+char *concat(char *s1, char *s2)
 {
-	char *result = malloc(strlen(s1) + strlen(s2) + 1);
+	char *result = malloc(_strlen(s1) + _strlen(s2) + 1);
 	/* TODO check for errors in malloc here */
-	strcpy(result, s1);
+	_strcpy(result, s1);
 	strcat(result, s2);
 	return (result);
 }
