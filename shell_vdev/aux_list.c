@@ -15,7 +15,7 @@ list_t *list_path(char **environ)
 	while (environ[i])
 	{
 		var_name = strtok(environ[i], "=");
-		if (_strtwins(var_name, "PATH") == 0)
+		if (str_twins(var_name, "PATH") == 0)
 		{
 			var_value = strtok(NULL, "\n");
 			break;
@@ -28,7 +28,7 @@ list_t *list_path(char **environ)
 		aux = strtok(var_value, ":");
 		if (aux)
 		{
-			dir = _strdup(aux);
+			dir = str_dup(aux);
 			head = add_to_list(&head, dir);
 			aux = strtok(NULL, ":");
 		}
@@ -36,7 +36,7 @@ list_t *list_path(char **environ)
 		while (aux)
 		{
 			i++;
-			dir = _strdup(aux);
+			dir = str_dup(aux);
 			add_to_list(&head, dir);
 			temp = temp->next;
 			aux = strtok(NULL, ":");

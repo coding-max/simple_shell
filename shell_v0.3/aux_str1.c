@@ -23,12 +23,12 @@ int not_empty(char *input_buffer)
 }
 
 /**
- * _strtwins - compares two strings.
+ * str_twins - compares two strings.
  * @s1: string 1.
  * @s2: string 2.
  * Return: 0 if s1 == s2, -1 if s1 != s2.
  */
-int _strtwins(char *s1, char *s2)
+int str_twins(char *s1, char *s2)
 {
 	int i = 0;
 

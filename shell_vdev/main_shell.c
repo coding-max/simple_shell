@@ -23,7 +23,7 @@ int start_shell(list_t *path)
 			input = create_argv(input_buffer, &path);
 
 			/* // * temp condition to end program */
-			if (!_strtwins(input[0], "exit"))
+			if (!str_twins(input[0], "exit"))
 			{
 				break;
 			}

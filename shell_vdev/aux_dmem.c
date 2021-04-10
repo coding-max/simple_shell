@@ -40,7 +40,7 @@ char **create_argv(char *input_buffer, list_t **path)
 	while (ac < (argc + 1))
 	{
 		/* duplicates argument and adds it to array */
-		str_to_put = _strdup(current_string);
+		str_to_put = str_dup(current_string);
 		argv[ac] = str_to_put;
 		current_string = strtok(NULL, " ");
 		ac++;
@@ -65,12 +65,12 @@ char *get_path(char *buffer, list_t **path)
 
 	/* clean input in case that the first(s) chars are spaces */
 	input_buffer = clean_spaces(buffer);
-	input = _strdup(input_buffer);
+	input = str_dup(input_buffer);
 	input = strtok(input, "\n");
 	free(input_buffer);
 
 	/* extrae el primer argumento de input */
-	aux = _strdup(input);
+	aux = str_dup(input);
 	command = strtok(aux, " ");
 	if (command == NULL)
 		command = aux;
@@ -81,8 +81,8 @@ char *get_path(char *buffer, list_t **path)
 		free(aux);
 		return (input);
 	}
-	slash_command = concat("/", command);
-	slash_input = concat("/", input);
+	slash_command = str_con("/", command);
+	slash_input = str_con("/", input);
 
 	free(aux);
 	return (aux_get_path(list_pointer, slash_command, slash_input, input));
@@ -106,7 +106,7 @@ char *aux_get_path(list_t *list_pointer, char *slash_command,
 	while (list_pointer) /* does not reach the end of the list */
 	{
 		/* check if command is executable in $list_pointer->dir */
-		aux = concat(list_pointer->dir, slash_command);
+		aux = str_con(list_pointer->dir, slash_command);
 		if (stat(aux, &status) == 0)
 			break;
 		free(aux);
@@ -117,7 +117,7 @@ char *aux_get_path(list_t *list_pointer, char *slash_command,
 	{
 		/* concatenar el resto de argumentos */
 		free(aux);
-		aux = concat(list_pointer->dir, slash_input);
+		aux = str_con(list_pointer->dir, slash_input);
 		free(input);
 		free(slash_input);
 		free(slash_command);
@@ -138,7 +138,7 @@ char *clean_spaces(char *buffer)
 	int len, first_char_position, i = 0;
 	char *new_buffer, *true_buffer;
 
-	new_buffer = _strdup(buffer);
+	new_buffer = str_dup(buffer);
 	if (new_buffer[0] != ' ')
 		return (new_buffer);
 	while (new_buffer[i] == ' ')

@@ -36,13 +36,13 @@ void free_argv(char **argv);
 
 /* aux_str1.c */
 int not_empty(char *input_buffer);
-int _strtwins(char *s1, char *s2);
+int str_twins(char *s1, char *s2);
 
 /* aux_str2.c */
-int _strlen(char *s);
-char *_strcpy(char *dest, char *src);
-char *_strdup(char *str);
-char *_strcat(char *dest, char *src);
-char* concat(char *s1, char *s2);
+int str_len(char *s);
+char *str_cpy(char *dest, char *src);
+char *str_dup(char *str);
+char *str_cat(char *dest, char *src);
+char* str_con(char *s1, char *s2);
 
 #endif
