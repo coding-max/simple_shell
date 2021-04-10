@@ -1,8 +1,22 @@
-15c15
-< SHLVL=2
----
-> SHLVL=1
-22c22
-< _=/usr/bin/env
----
-> _=./hsh
+SHELL=/bin/bash							SHELL=/bin/bash
+WSL_DISTRO_NAME=Ubuntu-20.04					WSL_DISTRO_NAME=Ubuntu-20.04
+WT_SESSION=20cd966e-b7f4-498e-93ac-ccc6892ee691			WT_SESSION=20cd966e-b7f4-498e-93ac-ccc6892ee691
+NAME=DESKTOP-7AK6NQS						NAME=DESKTOP-7AK6NQS
+PWD=/home/pxnmatz/Holberton/simple_shell/shell_testing		PWD=/home/pxnmatz/Holberton/simple_shell/shell_testing
+LOGNAME=pxnmatz							LOGNAME=pxnmatz
+HOME=/home/pxnmatz						HOME=/home/pxnmatz
+LANG=C.UTF-8							LANG=C.UTF-8
+WSL_INTEROP=/run/WSL/22821_interop				WSL_INTEROP=/run/WSL/22821_interop
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=0	LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=0
+LESSCLOSE=/usr/bin/lesspipe %s %s				LESSCLOSE=/usr/bin/lesspipe %s %s
+TERM=xterm-256color						TERM=xterm-256color
+LESSOPEN=| /usr/bin/lesspipe %s					LESSOPEN=| /usr/bin/lesspipe %s
+USER=pxnmatz							USER=pxnmatz
+SHLVL=2							      |	SHLVL=1
+WSLENV=WT_SESSION::WT_PROFILE_ID				WSLENV=WT_SESSION::WT_PROFILE_ID
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desk	XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desk
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:
+HOSTTYPE=x86_64							HOSTTYPE=x86_64
+WT_PROFILE_ID={07b52e3e-de2c-5db4-bd2d-ba144ed6c273}		WT_PROFILE_ID={07b52e3e-de2c-5db4-bd2d-ba144ed6c273}
+OLDPWD=/home/pxnmatz/Holberton/simple_shell			OLDPWD=/home/pxnmatz/Holberton/simple_shell
+_=/usr/bin/env						      |	_=./hsh

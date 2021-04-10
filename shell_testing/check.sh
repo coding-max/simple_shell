@@ -19,46 +19,47 @@ function execute()
 	RESULT=$(echo $DIFF | grep -c "identical")
 	if [ $RESULT -eq 1 ]
 	then
-		echo -e "[${GREEN}OK${NC}] test $TEST"
+		echo -e " test $TEST: [${GREEN}OK${NC}]"
 	else
-		echo -e "[${RED}KO${NC}] test $TEST"
-		diff log/expected/test$TEST log/obtained/test$TEST > log/test$TEST 2>&1
+		echo -e " test $TEST: [${RED}KO${NC}] --> ${RED}details:${NC} log/test$TEST"
+		sdiff log/expected/test$TEST log/obtained/test$TEST > log/test$TEST 2>&1
 	fi
+	sleep 0.1
 }
 
-TEST=1
+TEST=01
 COMMAND=""
 execute
 
-TEST=2
+TEST=02
 COMMAND=" "
 execute
 
-TEST=3
+TEST=03
 COMMAND="                   "
 execute
 
-TEST=4
+TEST=04
 COMMAND="/bin/ls"
 execute
 
-TEST=5
+TEST=05
 COMMAND="          /bin/pwd"
 execute
 
-TEST=6
+TEST=06
 COMMAND="/bin/pwd          "
 execute
 
-TEST=7
+TEST=07
 COMMAND="     /bin/pwd     "
 execute
 
-TEST=8
+TEST=08
 COMMAND="/usr/bin/whoami"
 execute
 
-TEST=9
+TEST=09
 COMMAND="/usr/bin/whoami"
 execute
 
