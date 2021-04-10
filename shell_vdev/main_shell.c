@@ -5,12 +5,12 @@
  * @path: pointer to the list of dir of the PATH.
  * Return: always 0 (success).
  */
-int start_shell(list_t *path,  char **env)
+int start_shell(list_t *path)
 {
 	size_t len = 0;
 	char *input_buffer = NULL;
 	char **input;
-	int status, i;
+	int status;
 	pid_t pid = getpid();
 
 	while (1)
@@ -27,30 +27,18 @@ int start_shell(list_t *path,  char **env)
 			{
 				break;
 			}
-			if (!_strtwins(input[0], "/usr/bin/env"))
+			pid = fork();
+			/* child process executes command, father process waits */
+			if (pid == 0)
 			{
-				i = 0;
-				while (env[i])
+				if (execve(input[0], input, NULL) == -1)
 				{
-					printf("%s\n", env[i]);
-					i++;
+					write(STDOUT_FILENO, "No such file or directory\n", 27);
 				}
+				break;
 			}
-			else 
-			{
-				pid = fork();
-				/* child process executes command, father process waits */
-				if (pid == 0)
-				{
-					if (execve(input[0], input, NULL) == -1)
-					{
-						write(STDOUT_FILENO, "No such file or directory\n", 27);
-					}
-					break;
-				}
-				else
-					wait(&status);
-			}
+			else
+				wait(&status);
 			free_argv(input);
 		}
 	}
@@ -65,35 +53,23 @@ int start_shell(list_t *path,  char **env)
  * @path: pointer to the list of dir of the PATH.
  * Return: always 0 (success).
  */
-int only_execute(char *input_buffer, list_t *path,  char **env)
+int only_execute(char *input_buffer, list_t *path)
 {
 	char **input;
-	int pid, status, i;
+	int pid, status;
 
 	if (not_empty(input_buffer))
 	{
 		input = create_argv(input_buffer, &path);
-		if (!_strtwins(input[0], "/usr/bin/env"))
+		pid = fork();
+		/* child process executes command, father process waits */
+		if (pid == 0)
 		{
-			i = 0;
-			while (env[i])
-			{
-				printf("%s\n", env[i]);
-				i++;
-			}
+			if (execve(input[0], input, NULL) == -1)
+				write(STDOUT_FILENO, "No such file or directory\n", 27);
 		}
 		else
-		{
-			pid = fork();
-			/* child process executes command, father process waits */
-			if (pid == 0)
-			{
-				if (execve(input[0], input, NULL) == -1)
-					write(STDOUT_FILENO, "No such file or directory\n", 27);
-			}
-			else
-				wait(&status);
-		}
+			wait(&status);
 		free_argv(input);
 	}
 

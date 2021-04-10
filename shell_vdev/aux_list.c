@@ -5,33 +5,13 @@
  * @environ: environment variable.
  * Return: a pointer to the new list.
  */
-list_t *list_path(char **env)
+list_t *list_path(char **environ)
 {
 	list_t *head = NULL, *temp = NULL;
 	char *var_name = NULL, *var_value = NULL;
 	char *dir, *aux;
-	int i, len;
-	char **environ;
+	int i = 0;
 
-	/* calculo largo y creo el array */
-	len = 0;
-	while (env[len])
-	{
-		len++;
-	}
-	environ = malloc(sizeof(char *) * len);
-	if (!environ)
-		return (NULL);
-
-	/*  _strdup a cada posicion en env */
-	i = 0;
-	while (env[i])
-	{
-		environ[i] =  _strdup(env[i]);
-		i++;
-	}
-
-	i = 0;
 	while (environ[i])
 	{
 		var_name = strtok(environ[i], "=");
@@ -48,7 +28,7 @@ list_t *list_path(char **env)
 		aux = strtok(var_value, ":");
 		if (aux)
 		{
-			dir =  _strdup(aux);
+			dir = strdup(aux);
 			head = add_to_list(&head, dir);
 			aux = strtok(NULL, ":");
 		}
@@ -56,7 +36,7 @@ list_t *list_path(char **env)
 		while (aux)
 		{
 			i++;
-			dir =  _strdup(aux);
+			dir = strdup(aux);
 			add_to_list(&head, dir);
 			temp = temp->next;
 			aux = strtok(NULL, ":");
@@ -65,13 +45,6 @@ list_t *list_path(char **env)
 	else
 		printf("ERROR: var_value NULL\n");
 
-	i = 0;
-	while (i < len)
-	{
-		free(environ[i]);
-		i++;
-	}
-	free(environ);
 	return (head);
 }
 

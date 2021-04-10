@@ -1,3 +1,4 @@
+  
 #include "shell.h"
 
 /**
@@ -20,10 +21,13 @@ int main(__attribute__((unused)) int ac,
 	{
 		/* reads stdin if arguments are passed with pipeline */
 		getline(&stdin_buffer, &len, stdin);
-		return (only_execute(stdin_buffer, path, env));
+		aux = only_execute(stdin_buffer, path);
+		free_list(path);
+		free(stdin_buffer);
+		return (aux);
 	}
 	/* starts interactive shell */
-	aux = start_shell(path, env);
+	aux = start_shell(path);
 	free_list(path);
 	return (aux);
 }
