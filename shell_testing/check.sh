@@ -24,8 +24,11 @@ function execute()
 		echo -e " test $TEST: [${RED}KO${NC}] --> ${RED}details:${NC} log/test$TEST"
 		sdiff log/expected/test$TEST log/obtained/test$TEST > log/test$TEST 2>&1
 	fi
-	sleep 0.1
+	sleep 0.15
 }
+
+echo " Running test suite..."
+sleep 1
 
 TEST=01
 COMMAND=""
