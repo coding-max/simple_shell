@@ -1,0 +1,8 @@
+15c15
+< SHLVL=2
+---
+> SHLVL=1
+22c22
+< _=/usr/bin/env
+---
+> _=./hsh
