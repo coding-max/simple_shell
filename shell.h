@@ -19,8 +19,8 @@ typedef struct list
 } list_t;
 
 /* main_shell */
-int only_execute(char *input_buffer, list_t *path);
-int start_shell(list_t *path);
+int only_execute(char *input_buffer, list_t *path,  char **env);
+int start_shell(list_t *path,  char **env);
 
 /* aux_list.c */
 list_t *list_path(char **env);

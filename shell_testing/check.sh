@@ -27,6 +27,8 @@ function execute()
 	sleep 0.1
 }
 
+echo " Running test suite..."
+
 TEST=01
 COMMAND=""
 execute
