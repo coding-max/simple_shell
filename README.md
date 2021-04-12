@@ -23,7 +23,7 @@
 `char **create_argv(char *input_buffer, list_t **path)`  
 `void free_argv(char **argv)`  
 
-- aux_func.c 
+- aux_func.c  
 `int check_builtin(char *command)`  
 `int check_syntax(char *buffer)`  
 `int builtins(char **input, char **env`)  
