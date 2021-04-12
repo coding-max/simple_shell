@@ -2,14 +2,13 @@
 
 /**
  * list_path - create a list whith the direcories in the PATH.
- * @environ: environment variable.
+ * @env: environment variable.
  * Return: a pointer to the new list.
  */
 list_t *list_path(char **env)
 {
-	list_t *head = NULL, *temp = NULL;
-	char *var_name = NULL, *var_value = NULL;
-	char *dir, *aux, **environ;
+	list_t *head = NULL;
+	char **environ;
 	int len, i;
 
 	len = 0;
@@ -29,6 +28,31 @@ list_t *list_path(char **env)
 		i++;
 	}
 
+	head = create_list(environ);
+
+	i = 0;
+	while (i < len)
+	{
+		free(environ[i]);
+		i++;
+	}
+	free(environ);
+
+	return (head);
+}
+
+
+/**
+ * create_list - create a list whith the direcories in the PATH.
+ * @environ: environment variable.
+ * Return: a pointer to the new list.
+ */
+list_t *create_list(char **environ)
+{
+	list_t *head = NULL, *temp = NULL;
+	char *dir, *aux, *var_name, *var_value = NULL;
+	int i;
+
 	i = 0;
 	while (environ[i])
 	{
@@ -47,7 +71,7 @@ list_t *list_path(char **env)
 		if (aux)
 		{
 			dir = str_dup(aux);
-			head = add_to_list(&head, dir);
+			head = add_list(&head, dir);
 			aux = strtok(NULL, ":");
 		}
 		temp = head;
@@ -55,37 +79,31 @@ list_t *list_path(char **env)
 		{
 			i++;
 			dir = str_dup(aux);
-			add_to_list(&head, dir);
+			add_list(&head, dir);
 			temp = temp->next;
 			aux = strtok(NULL, ":");
 		}
 	}
 	else
-		printf("ERROR: var_value NULL\n");
-	i = 0;
-	while (i < len)
-	{
-		free(environ[i]);
-		i++;
-	}
-	free(environ);
+		perror("ERROR: var_value NULL\n");
+
 	return (head);
 }
 
 /**
- * add_to_list - add a new node to the list.
+ * add_list - add a new node to the list.
  * @head: pointer to the list.
  * @dir: string to be placed in the new node.
  * Return: pointer to the list.
  */
-list_t *add_to_list(list_t **head, char *dir)
+list_t *add_list(list_t **head, char *dir)
 {
 	list_t *new, *aux = *head;
 
 	new = malloc(sizeof(list_t));
 	if (new == NULL)
 	{
-		printf("ERROR: unable to allocate memory\n");
+		perror("ERROR: unable to allocate memory\n");
 		return (NULL);
 	}
 	new->dir = dir;

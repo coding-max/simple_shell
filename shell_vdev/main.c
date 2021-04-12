@@ -15,12 +15,13 @@ int main(__attribute__((unused)) int ac,
 	char *stdin_buffer = NULL;
 	int aux;
 
+	signal(SIGINT, SIG_IGN);
 	path = list_path(env);
 	if (!isatty(0))
 	{
 		/* reads stdin if arguments are passed with pipeline */
 		getline(&stdin_buffer, &len, stdin);
-		aux = only_execute(stdin_buffer, path, env);
+		aux = execute_buffer(stdin_buffer, path, env);
 		free_list(path);
 		free(stdin_buffer);
 		return (aux);
@@ -29,4 +30,125 @@ int main(__attribute__((unused)) int ac,
 	aux = start_shell(path, env);
 	free_list(path);
 	return (aux);
+}
+
+/**
+ * start_shell - runs the interactive shell.
+ * @path: pointer to the list of dir of the PATH.
+ * @env: environment variable.
+ * Return: always 0 (success).
+ */
+int start_shell(list_t *path, char **env)
+{
+	char *input_buffer = NULL;
+	int status;
+	size_t len = 0;
+
+	while (1)
+	{
+		write(STDOUT_FILENO, "\033[0;36mhsh# \033[0m", 16);
+		status = getline(&input_buffer, &len, stdin);
+		if (status == -1)
+		{
+			perror("CTRL+D");
+			free(input_buffer);
+			break;
+		}
+		/* if buffer only contains spaces or the \n char will show prompt again */
+		status = execute_buffer(input_buffer, path, env);
+		if (status == -1 || status == 1 || status == 2)
+		{
+			if (status == -1)
+				perror("COMMAND NOT FOUND");
+			free(input_buffer);
+			break;
+		}
+	}
+	return (status);
+}
+
+/**
+ * execute_buffer - executes a command line.
+ * @input_buffer: command line to execute.
+ * @path: pointer to the list of dir of the PATH.
+ * @env: environment variable.
+ * Return: always 0 (success).
+ */
+int execute_buffer(char *input_buffer, list_t *path, char **env)
+{
+	char *new_buffer;
+	int aux, final, exe_result = 0;
+
+	if (not_empty(input_buffer))
+	{
+		final = str_count(input_buffer);
+		if (final > 1)
+		{
+			aux = check_syntax(input_buffer);
+			if (aux == -1)
+			{
+				perror("SYNTAX");
+				return (-1);
+			}
+			new_buffer = str_tr(input_buffer);
+		}
+		else
+			new_buffer = str_dup(input_buffer);
+
+		exe_result = execute_command(new_buffer, path, env, final);
+		free(new_buffer);
+	}
+	return (exe_result);
+}
+
+/**
+ * execute_command - run a command.
+ * @new_buffer: command line to execute.
+ * @path: pointer to the list of dir of the PATH.
+ * @env: environment variable.
+ * @final: total number of separate commands (;).
+ * Return: 0 (successful), 1 (command not found), or 2 (exit command).
+ */
+int execute_command(char *new_buffer, list_t *path, char **env, int final)
+{
+	char *tmp_buffer, *current_buffer;
+	char **input;
+	int i, aux, current, status, exe_result = 0;
+	pid_t pid = getpid();
+
+	current = 0;
+	while (current < final)
+	{
+		tmp_buffer = str_dup(new_buffer);
+		current_buffer = strtok(tmp_buffer, "\n");
+		for (i = 0; i < current; i++)
+			current_buffer = strtok(NULL, "\n");
+		input = create_argv(current_buffer, &path);
+		/* // * temp condition to end program */
+		aux = builtins(input, env);
+		if (aux == 2)
+		{
+			free(tmp_buffer);
+			return (2);
+		}
+		if (aux == 0)
+		{
+			pid = fork();
+			/* child process executes command, father process waits */
+			if (pid == 0)
+			{
+				if (execve(input[0], input, NULL) == -1)
+				{
+					perror(input[0]);
+					exe_result = 1;
+				}
+			}
+			else
+				wait(&status);
+		}
+		free_argv(input);
+		free(tmp_buffer);
+		current++;
+	}
+	return (exe_result);
 }

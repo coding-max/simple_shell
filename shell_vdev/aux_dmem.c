@@ -66,7 +66,6 @@ char *get_path(char *buffer, list_t **path)
 	/* clean input in case that the first(s) chars are spaces */
 	input_buffer = clean_spaces(buffer);
 	input = str_dup(input_buffer);
-	input = strtok(input, "\n");
 	free(input_buffer);
 
 	/* extrae el primer argumento de input */
@@ -77,6 +76,12 @@ char *get_path(char *buffer, list_t **path)
 
 	/* check if the first argument is executable */
 	if (stat(command, &status) == 0)
+	{
+		free(aux);
+		return (input);
+	}
+	/* check if the first argument is a builtin command */
+	if (check_builtin(command) == 0)
 	{
 		free(aux);
 		return (input);
