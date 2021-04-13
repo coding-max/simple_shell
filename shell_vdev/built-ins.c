@@ -93,14 +93,42 @@ void print_help(char **input)
 {
 	char *str;
 
-	if (!str_twins(input[1], "help"))
+	if (input[1] != NULL)
 	{
-		str = "help: help\n\tsomething...\n";
-		write(STDOUT_FILENO, str, str_len(str));
+		if (!str_twins(input[1], "help"))
+		{
+			str = "help: help [pattern ...]\n";
+			write(STDOUT_FILENO, str, str_len(str));
+			str = "\tDisplay information about builtin commands.\n\n";
+			write(STDOUT_FILENO, str, str_len(str));
+			str = "\tDisplays brief summaries of builtin commands.  If PATTERN is\n";
+			write(STDOUT_FILENO, str, str_len(str));
+			str = "\tspecified, gives detailed help on all commands matching PATTERN,";
+			write(STDOUT_FILENO, str, str_len(str));
+			str = "\n\totherwise the list of help topics is printed.\n\n";
+			write(STDOUT_FILENO, str, str_len(str));
+			str = "\tArguments:\n";
+			write(STDOUT_FILENO, str, str_len(str));
+			str = "\t  PATTERN   Pattern specifiying a help topic\n";
+			write(STDOUT_FILENO, str, str_len(str));
+		}
+		else if (!str_twins(input[1], "exit"))
+		{
+			str = "exit: exit\n";
+			write(STDOUT_FILENO, str, str_len(str));
+			str = "\tExit the shell.\n";
+			write(STDOUT_FILENO, str, str_len(str));
+		}
 	}
-	else if (!str_twins(input[1], "exit"))
+	else
 	{
-		str = "exit: exit\n\tsomething...\n";
+		str = "These shell commands are defined internally.\n";
+		write(STDOUT_FILENO, str, str_len(str));
+		str = "Type `help name' to find out more about the function `name'.\n\n";
+		write(STDOUT_FILENO, str, str_len(str));
+		str = " help [pattern ...]\n";
+		write(STDOUT_FILENO, str, str_len(str));
+		str = " exit\n";
 		write(STDOUT_FILENO, str, str_len(str));
 	}
 }

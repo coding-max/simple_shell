@@ -12,16 +12,20 @@
 #include <errno.h>
 #include <signal.h>
 
+/**
+ * struct list - path directory list structure.
+ * @dir: directory path.
+ * @next: pointer to next directory node.
+ */
 typedef struct list
 {
-	char* dir;
+	char *dir;
 	struct list *next;
 } list_t;
 
 /* main.c */
-int main(__attribute__((unused)) int ac, __attribute__((unused)) char **av, char **env);
 int start_shell(list_t *path, char **env);
-int execute_buffer(char *input_buffer, list_t *path, char **env);
+int execute_buffer(char *buffer, list_t *path, char **env);
 int execute_command(char *new_buffer, list_t *path, char **env, int final);
 
 /* aux_list.c */
@@ -32,12 +36,14 @@ void free_list(list_t *head);
 
 /* aux_dmem.c */
 char *get_path(char *buffer, list_t **path);
-char *aux_get_path(list_t *list_pointer, char *slash_command, char *slash_input, char *input);
+char *aux_get_path(list_t *list_pointer,
+	char *slash_command, char *slash_input, char *input);
 char *clean_spaces(char *buffer);
 char **create_argv(char *input_buffer, list_t **path);
 void free_argv(char **argv);
 
 /* aux_func.c */
+char *clean_comments(char *buffer);
 int check_builtin(char *command);
 int check_syntax(char *buffer);
 int builtins(char **input, char **env);
@@ -56,5 +62,7 @@ int str_twins(char *s1, char *s2);
 int str_count(char *buffer);
 char *str_tr(char *buffer);
 
+void ctrl_c(__attribute__((unused)) int x);
+void print_error(char *input, int error_num);
 
 #endif

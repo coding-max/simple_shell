@@ -29,12 +29,16 @@ int str_len(char *s)
  */
 char *str_cpy(char *dest, char *src)
 {
-	char *direction = dest;
+	int i = 0;
 
-	while (*src)
-		*dest++ = *src++;
-	*dest = 0;
-	return (direction);
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+
+	return (dest);
 }
 
 /**
@@ -69,11 +73,11 @@ char *str_cat(char *dest, char *src)
 	if (src == NULL)
 		return (ptr);
 	for (i = 0; dest[i] != '\0'; i++)
-	{
-	}
+	;
 	for (j = 0; src[j] != '\0'; i++, j++)
 		dest[i] = src[j];
-	dest[i + 1] = '\n';
+	dest[i] = '\0';
+
 	return (ptr);
 }
 
@@ -95,6 +99,6 @@ char *str_con(char *s1, char *s2)
 	}
 
 	str_cpy(result, s1);
-	strcat(result, s2);
+	str_cat(result, s2);
 	return (result);
 }

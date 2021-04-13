@@ -1,6 +1,35 @@
 #include "shell.h"
 
 /**
+ * clean_comments - remove the comments from a buffer.
+ * @buffer: buffer to clean.
+ * Return: a pointer to the new (without comments) buffer.
+ */
+char *clean_comments(char *buffer)
+{
+	char *clean_buffer;
+	int i = 0;
+
+	clean_buffer = malloc(sizeof(char) * (str_len(buffer) + 1));
+	if (!clean_buffer)
+	{
+		perror("MALLOC");
+		return (NULL);
+	}
+
+	while (buffer[i])
+	{
+		if (buffer[i] == '#')
+			break;
+		clean_buffer[i] = buffer[i];
+		i++;
+	}
+	clean_buffer[i] = '\0';
+
+	return (clean_buffer);
+}
+
+/**
  * not_empty - checks if buffer contains only spaces
  * @input_buffer: command line to be executed
  * Return: 0 if input_buffer contains only spaces, -1 if contains another char.

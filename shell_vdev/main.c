@@ -40,27 +40,28 @@ int main(__attribute__((unused)) int ac,
  */
 int start_shell(list_t *path, char **env)
 {
-	char *input_buffer = NULL;
+	char *buffer = NULL;
 	int status;
 	size_t len = 0;
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "\033[0;36mhsh# \033[0m", 16);
-		status = getline(&input_buffer, &len, stdin);
+		signal(SIGINT, ctrl_c);
+		status = getline(&buffer, &len, stdin);
 		if (status == -1)
 		{
 			perror("CTRL+D");
-			free(input_buffer);
+			free(buffer);
 			break;
 		}
 		/* if buffer only contains spaces or the \n char will show prompt again */
-		status = execute_buffer(input_buffer, path, env);
+		status = execute_buffer(buffer, path, env);
 		if (status == -1 || status == 1 || status == 2)
 		{
 			if (status == -1)
 				perror("COMMAND NOT FOUND");
-			free(input_buffer);
+			free(buffer);
 			break;
 		}
 	}
@@ -69,16 +70,17 @@ int start_shell(list_t *path, char **env)
 
 /**
  * execute_buffer - executes a command line.
- * @input_buffer: command line to execute.
+ * @buffer: command line to execute.
  * @path: pointer to the list of dir of the PATH.
  * @env: environment variable.
  * Return: always 0 (success).
  */
-int execute_buffer(char *input_buffer, list_t *path, char **env)
+int execute_buffer(char *buffer, list_t *path, char **env)
 {
-	char *new_buffer;
+	char *input_buffer, *new_buffer;
 	int aux, final, exe_result = 0;
 
+	input_buffer = clean_comments(buffer);
 	if (not_empty(input_buffer))
 	{
 		final = str_count(input_buffer);
@@ -87,7 +89,8 @@ int execute_buffer(char *input_buffer, list_t *path, char **env)
 			aux = check_syntax(input_buffer);
 			if (aux == -1)
 			{
-				perror("SYNTAX");
+				print_error(input_buffer, 2);
+				free(input_buffer);
 				return (-1);
 			}
 			new_buffer = str_tr(input_buffer);
@@ -98,6 +101,7 @@ int execute_buffer(char *input_buffer, list_t *path, char **env)
 		exe_result = execute_command(new_buffer, path, env, final);
 		free(new_buffer);
 	}
+	free(input_buffer);
 	return (exe_result);
 }
 
@@ -139,7 +143,7 @@ int execute_command(char *new_buffer, list_t *path, char **env, int final)
 			{
 				if (execve(input[0], input, NULL) == -1)
 				{
-					perror(input[0]);
+					print_error(input[0], 1);
 					exe_result = 1;
 				}
 			}
