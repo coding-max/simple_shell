@@ -13,7 +13,7 @@ mkdir log/obtained
 
 function execute()
 {
-	$COMMAND > log/expected/test$TEST 2>&1
+	echo $COMMAND | sh > log/expected/test$TEST 2>&1
 	echo $COMMAND | ./hsh > log/obtained/test$TEST 2>&1
 	DIFF=$(diff -sq log/expected/test$TEST log/obtained/test$TEST)
 	RESULT=$(echo $DIFF | grep -c "identical")

@@ -13,7 +13,7 @@ mkdir log/obtained
 
 function execute()
 {
-	$COMMAND > log/expected/test$TEST 2>&1
+	echo $COMMAND | sh > log/expected/test$TEST 2>&1
 	echo $COMMAND | ./hsh > log/obtained/test$TEST 2>&1
 	DIFF=$(diff -sq log/expected/test$TEST log/obtained/test$TEST)
 	RESULT=$(echo $DIFF | grep -c "identical")
@@ -149,6 +149,41 @@ TEST=26
 COMMAND="¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????¿¿¿fail????"
 execute
 
+TEST=27
+COMMAND="  /bin/ls  ; /usr/bin/pwd "
+execute
+
+TEST=28
+COMMAND="  ls -las ; pwd ; whoami "
+execute
+
+TEST=29
+COMMAND=" ; ; "
+execute
+
+TEST=30
+COMMAND=" ls ; whoami ; ; pwd"
+execute
+
+TEST=31
+COMMAND=" ls ; whoami #; ; pwd"
+execute
+
+TEST=32
+COMMAND=" #ls ; whoami ; ; pwd"
+execute
+
+TEST=33
+COMMAND=" ls ; whoami ; ; #pwd"
+execute
+
+TEST=34
+COMMAND="#"
+execute
+
+TEST=35
+COMMAND=" #"
+execute
 
 rm -rf log/expected
 rm -rf log/obtained
