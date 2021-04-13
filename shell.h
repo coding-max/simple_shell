@@ -60,7 +60,7 @@ char *str_con(char *s1, char *s2);
 int not_empty(char *input_buffer);
 int str_twins(char *s1, char *s2);
 int str_count(char *buffer);
-char *str_tr(char *buffer);
+char *str_tr(char *buffer, char old_char, char new_char);
 
 /* errors.c */
 void ctrl_c(__attribute__((unused)) int x);

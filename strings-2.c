@@ -95,12 +95,14 @@ int str_count(char *buffer)
 }
 
 /**
- * str_tr - swap the character ";" by the character "\"
+ * str_tr - swap the character old_char by the character new_char
  * all the times it appears in the buffer.
  * @buffer: input buffer.
+ * @old_char: char to be changed.
+ * @new_char: char that replaces the old.
  * Return: the modified buffer.
  */
-char *str_tr(char *buffer)
+char *str_tr(char *buffer, char old_char, char new_char)
 {
 	int i = 0;
 	char *new_buffer;
@@ -115,8 +117,8 @@ char *str_tr(char *buffer)
 	i = 0;
 	while (new_buffer[i])
 	{
-		if (new_buffer[i] == ';')
-			new_buffer[i] = '\n';
+		if (new_buffer[i] == old_char)
+			new_buffer[i] = new_char;
 		i++;
 	}
 

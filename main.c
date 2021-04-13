@@ -77,10 +77,11 @@ int start_shell(list_t *path, char **env)
  */
 int execute_buffer(char *buffer, list_t *path, char **env)
 {
-	char *input_buffer, *new_buffer;
+	char *buffer_tr, *input_buffer, *new_buffer;
 	int aux, final, exe_result = 0;
 
-	input_buffer = clean_comments(buffer);
+	buffer_tr = clean_comments(buffer);
+	input_buffer = str_tr(buffer_tr, '\t', ' ');
 	if (not_empty(input_buffer))
 	{
 		final = str_count(input_buffer);
@@ -93,7 +94,7 @@ int execute_buffer(char *buffer, list_t *path, char **env)
 				free(input_buffer);
 				return (-1);
 			}
-			new_buffer = str_tr(input_buffer);
+			new_buffer = str_tr(input_buffer, ';', '\n');
 		}
 		else
 			new_buffer = str_dup(input_buffer);
@@ -102,6 +103,7 @@ int execute_buffer(char *buffer, list_t *path, char **env)
 		free(new_buffer);
 	}
 	free(input_buffer);
+	free(buffer_tr);
 	return (exe_result);
 }
 
