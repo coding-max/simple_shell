@@ -1,30 +1,29 @@
 .TH "BABY SHELL" 1 "April 2021" "simple_shell"
 .SH NAME
-baby shell \- baby shell works by receiving command from the user and sends it to the kernel so that they are executed.
+baby_shell \- baby_shell works by receiving commands from the user and sends it to the kernel so that they are executed.
 .SH SYNOPSIS
-.B shellby\fR [\fIfilename\fR]
+.B command [-o option_name] [command_file [argument ...]]
 .SH DESCRIPTION
-.B baby shell
-Baby shell interprets bash language commands, reads them from the command line, file or standard input and then executes them. Baby shell is very similar to the Linux shell but with limited features.
+Baby_shell interprets bash language commands, reads them from the command line, file or standard input and then executes them. Baby shell is very similar to the Linux shell but with limited features.
 
-.B INVOCATION
+.SH INVOCATION
 \fBbaby_shell\fR can be invoked either on interactive mode or non-interactive mode. If invoked with standard input, it will read and execute commands in order.
 
-If executed interactively, \fBbaby_shell\fR will display the prompt \fbaby_shell# \fR when ready to receive a command. Commands must be added one per line.
+If executed interactively, \fBbaby_shell\fR will display the prompt \fBbaby_shell$\fR when ready to receive a command. Commands must be added one per line.
 .in
 
-.B Exxecuting Commands
-.in +2n
-Upon receiving a command, \fBbaby_shell\fR will tokenize input using " " as a delimiter. The first token is taken as a ommand and the rest will be treated as its options.
+.SH EXECUTING COMMANDS
+.in
+Upon receiving a command, \fBbaby_shell\fR will tokenize input using " " as a delimiter. The first token is taken as a command and the rest will be treated as its options.
 
 .SH OPTIONS
-Options handled by baby shell derive from built-in commands.
+Options handled by baby_shell derive from built-in commands.
 .TP
 .BR \ pwd \fR
-print working directory is an an acronym for print working directory. This environmental variables stores the path to the current directory. This command is used to find the full path to the current directory and to verify the absolute path. Sample output: "root/user"
+Print working directory is an an acronym for print working directory. This environmental variable stores the path to the current directory. This command is used to find the full path to the current directory and to verify the absolute path. Sample output: "root/user"
 .TP
 .BR \ ls -l \fR
-lists files and directories,  -l is an option that lists files and directories in long format. This command will return files, directories, permissions, file owners, file sizes (in bytes), date of last modification and number of links.
+Lists files and directories, -l is an option that lists files and directories in long format. This command will return files, directories, permissions, file owners, file sizes (in bytes), date of last modification and number of links.
 .TP
 .BR \ exit \fR
 This command exits the shell where running.
@@ -35,7 +34,7 @@ This command prints environment variables.
 .BR
 
 .SH EXIT STATUS
-Unless otherwise specified simple shell will return the exit status of the last executed command. If there is a syntax error, \fbaby_shell\f will return 0, indicating success, or non-zero, indicating failure.  
+Unless otherwise specified the shell will return the exit status of the last executed command. If there is a syntax error, \fBbaby_shell\f will return 0, indicating success, or non-zero, indicating failure.  
 .TP
 .BR
 
@@ -52,7 +51,7 @@ Return value of the last executed command. Otherwise no return value.
 .SH SEE ALSO
 .BR sh(1) Linux man page.
 
-.SH AUTHORS
+.SH AUTHOR
 Maximiliano Pan, https://github.com/coding-max.
 .BR
 
