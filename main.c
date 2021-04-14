@@ -9,25 +9,15 @@
  */
 int main(__attribute__((unused)) int ac, char **av, char **env)
 {
-	size_t len = 0;
 	list_t *path;
-	char *stdin_buffer = NULL;
 	char *program_name = av[0];
-	int aux;
+	int aux, mode = 0;
 
 	signal(SIGINT, SIG_IGN);
 	path = list_path(env);
-	if (!isatty(0))
-	{
-		/* reads stdin if arguments are passed with pipeline */
-		getline(&stdin_buffer, &len, stdin);
-		aux = execute_buffer(stdin_buffer, path, env, program_name);
-		free_list(path);
-		free(stdin_buffer);
-		return (aux);
-	}
-	/* starts interactive shell */
-	aux = start_shell(path, env, program_name);
+	if (isatty(0))
+		mode = 1;
+	aux = start_shell(path, env, program_name, mode);
 	free_list(path);
 	return (aux);
 }
@@ -36,9 +26,11 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
  * start_shell - runs the interactive shell.
  * @path: pointer to the list of dir of the PATH.
  * @env: environment variable.
+ * @program_name: argv[0] of main.
+ * @mode: specify whether to run in interactive or non-interactive mode.
  * Return: always 0 (success).
  */
-int start_shell(list_t *path, char **env, char *program_name)
+int start_shell(list_t *path, char **env, char *program_name, int mode)
 {
 	char *buffer = NULL;
 	int status;
@@ -46,15 +38,20 @@ int start_shell(list_t *path, char **env, char *program_name)
 
 	while (1)
 	{
-		write(STDOUT_FILENO, "\033[0;36mhsh# \033[0m", 16);
+		if (mode == 1)
+			write(STDOUT_FILENO, "\033[0;36mhsh# \033[0m", 16);
 		signal(SIGINT, ctrl_c);
-		status = getline(&buffer, &len, stdin);
+		if (mode == 1)
+			status = getline(&buffer, &len, stdout);
+		else
+			status = getline(&buffer, &len, stdin);
 		if (status == -1)
 		{
 			if (status == EOF)
 			{
 				free(buffer);
-				write(STDOUT_FILENO, "\n", 1);
+				if (mode == 1)
+					write(STDOUT_FILENO, "\n", 1);
 				return (-1);
 			}
 			print_error(program_name, buffer, 3);
@@ -77,6 +74,7 @@ int start_shell(list_t *path, char **env, char *program_name)
  * @buffer: command line to execute.
  * @path: pointer to the list of dir of the PATH.
  * @env: environment variable.
+ * @program_name: argv[0] of main.
  * Return: always 0 (success).
  */
 int execute_buffer(char *buffer, list_t *path, char **env, char *program_name)
@@ -88,7 +86,7 @@ int execute_buffer(char *buffer, list_t *path, char **env, char *program_name)
 	input_buffer = str_tr(buffer_tr, '\t', ' ');
 	if (not_empty(input_buffer))
 	{
-		final = str_count(input_buffer);
+		final = str_count(input_buffer, ';');
 		if (final > 1)
 		{
 			aux = check_syntax(input_buffer);
@@ -117,9 +115,11 @@ int execute_buffer(char *buffer, list_t *path, char **env, char *program_name)
  * @path: pointer to the list of dir of the PATH.
  * @env: environment variable.
  * @final: total number of separate commands (;).
+ * @program_name: argv[0] of main.
  * Return: 0 (successful), 1 (command not found), or 2 (exit command).
  */
-int execute_command(char *new_buffer, list_t *path, char **env, int final, char *program_name)
+int execute_command(char *new_buffer, list_t *path, char **env,
+			int final, char *program_name)
 {
 	char *tmp_buffer, *current_buffer;
 	char **input;

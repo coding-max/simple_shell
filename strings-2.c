@@ -74,19 +74,19 @@ int str_twins(char *s1, char *s2)
 }
 
 /**
- * str_count - counts the number of times the command separator (;)
- * is used in the buffer.
+ * str_count - counts the number of times the char c is used in the buffer.
  * @buffer: buffer to check.
+ * @c: char.
  * Return: number of repetitions +1.
  */
-int str_count(char *buffer)
+int str_count(char *buffer, char c)
 {
 	int i = 0;
 	int counter = 0;
 
 	while (buffer[i])
 	{
-		if (buffer[i] == ';')
+		if (buffer[i] == c)
 			counter++;
 		i++;
 	}

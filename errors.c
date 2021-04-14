@@ -13,6 +13,7 @@ void ctrl_c(__attribute__((unused)) int x)
 
 /**
  * print_error - print specific errors to standard output.
+ * @program_name: argv[0] of main.
  * @input: command that produces the error.
  * @error_num: error number - identifies the error type.
  */

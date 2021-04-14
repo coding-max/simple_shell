@@ -24,7 +24,7 @@ typedef struct list
 } list_t;
 
 /* main.c */
-int start_shell(list_t *path, char **env, char *program_name);
+int start_shell(list_t *path, char **env, char *program_name, int mode);
 int execute_buffer(char *buffer, list_t *path, char **env, char *program_name);
 int execute_command(char *new_buffer, list_t *path, char **env, int final, char *program_name);
 
@@ -59,7 +59,7 @@ char *str_con(char *s1, char *s2);
 /* strings-2.c */
 int not_empty(char *input_buffer);
 int str_twins(char *s1, char *s2);
-int str_count(char *buffer);
+int str_count(char *buffer, char c);
 char *str_tr(char *buffer, char old_char, char new_char);
 
 /* errors.c */
