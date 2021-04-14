@@ -1,0 +1,61 @@
+.TH "BABY SHELL" 1 "April 2021" "simple_shell"
+.SH NAME
+baby shell \- baby shell works by receiving command from the user and sends it to the kernel so that they are executed.
+.SH SYNOPSIS
+.B shellby\fR [\fIfilename\fR]
+.SH DESCRIPTION
+.B baby shell
+Baby shell interprets bash language commands, reads them from the command line, file or standard input and then executes them. Baby shell is very similar to the Linux shell but with limited features.
+
+.B INVOCATION
+\fBbaby_shell\fR can be invoked either on interactive mode or non-interactive mode. If invoked with standard input, it will read and execute commands in order.
+
+If executed interactively, \fBbaby_shell\fR will display the prompt \fbaby_shell# \fR when ready to receive a command. Commands must be added one per line.
+.in
+
+.B Exxecuting Commands
+.in +2n
+Upon receiving a command, \fBbaby_shell\fR will tokenize input using " " as a delimiter. The first token is taken as a ommand and the rest will be treated as its options.
+
+.SH OPTIONS
+Options handled by baby shell derive from built-in commands.
+.TP
+.BR \ pwd \fR
+print working directory is an an acronym for print working directory. This environmental variables stores the path to the current directory. This command is used to find the full path to the current directory and to verify the absolute path. Sample output: "root/user"
+.TP
+.BR \ ls -l \fR
+lists files and directories,  -l is an option that lists files and directories in long format. This command will return files, directories, permissions, file owners, file sizes (in bytes), date of last modification and number of links.
+.TP
+.BR \ exit \fR
+This command exits the shell where running.
+.TP
+.BR \ env \fR
+This command prints environment variables.
+.TP
+.BR
+
+.SH EXIT STATUS
+Unless otherwise specified simple shell will return the exit status of the last executed command. If there is a syntax error, \fbaby_shell\f will return 0, indicating success, or non-zero, indicating failure.  
+.TP
+.BR
+
+.SH RETURN VALUE
+Return value of the last executed command. Otherwise no return value.
+.TP
+.BR
+
+.SH AUXILIARY FUNCTIONS
+.B check_syntax, check_builtin, builtins, print_help, create_argv, get_path, aux_get_path, clean_spaces, free_argv, list_path, create_list, add_list, free_list, ctrl_c, print_error, str_len, str_cpy, str_dup, str_cat, str_con, clean_comments, not_empty, str_twins, str_count, str_tr.
+.TP
+.BR
+
+.SH SEE ALSO
+.BR sh(1) Linux man page.
+
+.SH AUTHORS
+Maximiliano Pan, https://github.com/coding-max.
+.BR
+
+.SH BUGS
+So far, no bugs have been detected. Should you encounter any, please let me know, https://github.com/coding-max.
+.BR
