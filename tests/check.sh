@@ -174,6 +174,18 @@ TEST=35
 COMMAND=" #"
 execute
 
+TEST=36
+COMMAND="		ls		"
+execute
+
+TEST=37
+COMMAND="	  ls"
+execute
+
+TEST=38
+COMMAND="  	  	pwd"
+execute
+
 rm -rf log/expected
 rm -rf log/obtained
 rm hsh
