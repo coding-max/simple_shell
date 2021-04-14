@@ -27,6 +27,7 @@ typedef struct list
 int start_shell(list_t *path, char **env, char *program_name, int mode);
 int execute_buffer(char *buffer, list_t *path, char **env, char *program_name);
 int execute_command(char *new_buffer, list_t *path, char **env, int final, char *program_name);
+int execute_fork(char **input, char *program_name);
 
 /* env-list.c */
 list_t *list_path(char **env);

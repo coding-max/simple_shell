@@ -33,7 +33,7 @@ int main(__attribute__((unused)) int ac, char **av, char **env)
 int start_shell(list_t *path, char **env, char *program_name, int mode)
 {
 	char *buffer = NULL;
-	int status;
+	int status, line_status;
 	size_t len = 0;
 
 	while (1)
@@ -41,21 +41,21 @@ int start_shell(list_t *path, char **env, char *program_name, int mode)
 		if (mode == 1)
 			write(STDOUT_FILENO, "\033[0;36mhsh# \033[0m", 16);
 		signal(SIGINT, ctrl_c);
-		status = getline(&buffer, &len, stdin);
-		if (status == -1)
+		line_status = getline(&buffer, &len, stdin);
+		if (line_status == -1)
 		{
-			if (status == EOF)
+			if (line_status == EOF)
 			{
 				free(buffer);
 				if (mode == 1)
 					write(STDOUT_FILENO, "\n", 1);
-				return (-1);
+				return (status);
 			}
 			print_error(program_name, buffer, 3);
 		}
 		/* if buffer only contains spaces or the \n char will show prompt again */
 		status = execute_buffer(buffer, path, env, program_name);
-		if (status == -1 || status == 1 || status == 2)
+		if (status == -1 || status == 127 || status == 2)
 		{
 			if (status == -1)
 				perror("COMMAND NOT FOUND");
@@ -121,6 +121,7 @@ int execute_command(char *new_buffer, list_t *path, char **env,
 	char *tmp_buffer, *current_buffer;
 	char **input;
 	int i, aux, current, status, exe_result = 0;
+	struct stat stat_status;
 	pid_t pid = getpid();
 
 	current = 0;
@@ -140,22 +141,43 @@ int execute_command(char *new_buffer, list_t *path, char **env,
 		}
 		if (aux == 0)
 		{
-			pid = fork();
-			/* child process executes command, father process waits */
-			if (pid == 0)
-			{
-				if (execve(input[0], input, NULL) == -1)
-				{
-					print_error(program_name, input[0], 1);
-					exe_result = 1;
-				}
-			}
-			else
-				wait(&status);
+			exe_result = execute_fork(input, program_name);
 		}
 		free_argv(input);
 		free(tmp_buffer);
 		current++;
 	}
+	return (exe_result);
+}
+
+/**
+ * execute_fork - auxiliar function for execute_command.
+ * @input: argv to execute.
+ * @program_name: argv[0] of main.
+ * Return: 0 (successful), 127 (command not found).
+ */
+int execute_fork(char **input, char *program_name)
+{
+	int status, exe_result = 0;
+	struct stat stat_status;
+	pid_t pid = getpid();
+
+	pid = fork();
+	/* child process executes command, father process waits */
+	if (pid == 0)
+	{
+		if (execve(input[0], input, NULL) == -1)
+		{
+			print_error(program_name, input[0], 127);
+			exe_result = 127;
+		}
+	}
+	else
+	{
+		wait(&status);
+		if (stat(input[0], &stat_status) == -1)
+			exe_result = 127;
+	}
+
 	return (exe_result);
 }

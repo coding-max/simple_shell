@@ -21,7 +21,7 @@ void print_error(char *program_name, char *input, int error_num)
 {
 	char *str;
 
-	if (error_num == 1) /* command not found */
+	if (error_num == 127) /* command not found */
 	{
 		write(STDOUT_FILENO, program_name, str_len(program_name));
 		write(STDOUT_FILENO, ": 1: ", 5);
