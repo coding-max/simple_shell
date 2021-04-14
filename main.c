@@ -51,9 +51,8 @@ int start_shell(list_t *path, char **env)
 		status = getline(&buffer, &len, stdin);
 		if (status == -1)
 		{
-			perror("CTRL+D");
 			free(buffer);
-			break;
+			return (-1);
 		}
 		/* if buffer only contains spaces or the \n char will show prompt again */
 		status = execute_buffer(buffer, path, env);
