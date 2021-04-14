@@ -7,12 +7,12 @@
  * @env: environment variable.
  * Return: always 0 (success).
  */
-int main(__attribute__((unused)) int ac,
-		__attribute__((unused)) char **av, char **env)
+int main(__attribute__((unused)) int ac, char **av, char **env)
 {
 	size_t len = 0;
 	list_t *path;
 	char *stdin_buffer = NULL;
+	char *program_name = av[0];
 	int aux;
 
 	signal(SIGINT, SIG_IGN);
@@ -21,13 +21,13 @@ int main(__attribute__((unused)) int ac,
 	{
 		/* reads stdin if arguments are passed with pipeline */
 		getline(&stdin_buffer, &len, stdin);
-		aux = execute_buffer(stdin_buffer, path, env);
+		aux = execute_buffer(stdin_buffer, path, env, program_name);
 		free_list(path);
 		free(stdin_buffer);
 		return (aux);
 	}
 	/* starts interactive shell */
-	aux = start_shell(path, env);
+	aux = start_shell(path, env, program_name);
 	free_list(path);
 	return (aux);
 }
@@ -38,7 +38,7 @@ int main(__attribute__((unused)) int ac,
  * @env: environment variable.
  * Return: always 0 (success).
  */
-int start_shell(list_t *path, char **env)
+int start_shell(list_t *path, char **env, char *program_name)
 {
 	char *buffer = NULL;
 	int status;
@@ -51,11 +51,16 @@ int start_shell(list_t *path, char **env)
 		status = getline(&buffer, &len, stdin);
 		if (status == -1)
 		{
-			free(buffer);
-			return (-1);
+			if (status == EOF)
+			{
+				free(buffer);
+				write(STDOUT_FILENO, "\n", 1);
+				return (-1);
+			}
+			print_error(program_name, buffer, 3);
 		}
 		/* if buffer only contains spaces or the \n char will show prompt again */
-		status = execute_buffer(buffer, path, env);
+		status = execute_buffer(buffer, path, env, program_name);
 		if (status == -1 || status == 1 || status == 2)
 		{
 			if (status == -1)
@@ -74,7 +79,7 @@ int start_shell(list_t *path, char **env)
  * @env: environment variable.
  * Return: always 0 (success).
  */
-int execute_buffer(char *buffer, list_t *path, char **env)
+int execute_buffer(char *buffer, list_t *path, char **env, char *program_name)
 {
 	char *buffer_tr, *input_buffer, *new_buffer;
 	int aux, final, exe_result = 0;
@@ -89,7 +94,7 @@ int execute_buffer(char *buffer, list_t *path, char **env)
 			aux = check_syntax(input_buffer);
 			if (aux == -1)
 			{
-				print_error(input_buffer, 2);
+				print_error(program_name, input_buffer, 2);
 				free(input_buffer);
 				return (-1);
 			}
@@ -98,7 +103,7 @@ int execute_buffer(char *buffer, list_t *path, char **env)
 		else
 			new_buffer = str_dup(input_buffer);
 
-		exe_result = execute_command(new_buffer, path, env, final);
+		exe_result = execute_command(new_buffer, path, env, final, program_name);
 		free(new_buffer);
 	}
 	free(input_buffer);
@@ -114,7 +119,7 @@ int execute_buffer(char *buffer, list_t *path, char **env)
  * @final: total number of separate commands (;).
  * Return: 0 (successful), 1 (command not found), or 2 (exit command).
  */
-int execute_command(char *new_buffer, list_t *path, char **env, int final)
+int execute_command(char *new_buffer, list_t *path, char **env, int final, char *program_name)
 {
 	char *tmp_buffer, *current_buffer;
 	char **input;
@@ -144,7 +149,7 @@ int execute_command(char *new_buffer, list_t *path, char **env, int final)
 			{
 				if (execve(input[0], input, NULL) == -1)
 				{
-					print_error(input[0], 1);
+					print_error(program_name, input[0], 1);
 					exe_result = 1;
 				}
 			}

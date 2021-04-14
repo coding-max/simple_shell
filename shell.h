@@ -24,9 +24,9 @@ typedef struct list
 } list_t;
 
 /* main.c */
-int start_shell(list_t *path, char **env);
-int execute_buffer(char *buffer, list_t *path, char **env);
-int execute_command(char *new_buffer, list_t *path, char **env, int final);
+int start_shell(list_t *path, char **env, char *program_name);
+int execute_buffer(char *buffer, list_t *path, char **env, char *program_name);
+int execute_command(char *new_buffer, list_t *path, char **env, int final, char *program_name);
 
 /* env-list.c */
 list_t *list_path(char **env);
@@ -64,6 +64,6 @@ char *str_tr(char *buffer, char old_char, char new_char);
 
 /* errors.c */
 void ctrl_c(__attribute__((unused)) int x);
-void print_error(char *input, int error_num);
+void print_error(char *program_name, char *input, int error_num);
 
 #endif

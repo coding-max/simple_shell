@@ -16,13 +16,14 @@ void ctrl_c(__attribute__((unused)) int x)
  * @input: command that produces the error.
  * @error_num: error number - identifies the error type.
  */
-void print_error(char *input, int error_num)
+void print_error(char *program_name, char *input, int error_num)
 {
 	char *str;
 
 	if (error_num == 1) /* command not found */
 	{
-		write(STDOUT_FILENO, "sh: 1: ", 7);
+		write(STDOUT_FILENO, program_name, str_len(program_name));
+		write(STDOUT_FILENO, ": 1: ", 5);
 		write(STDOUT_FILENO, input, str_len(input));
 		write(STDOUT_FILENO, ": not found\n", 12);
 	}
@@ -36,7 +37,9 @@ void print_error(char *input, int error_num)
 	}
 	if (error_num == 3) /* malloc can't allocate memory */
 	{
-		str = "sh: 1: internal error allocating memory\n";
+		write(STDOUT_FILENO, program_name, str_len(program_name));
+		write(STDOUT_FILENO, ": 1: ", 5);
+		str = "internal error allocating memory\n";
 		write(STDOUT_FILENO, str, str_len(str));
 	}
 }
