@@ -41,10 +41,7 @@ int start_shell(list_t *path, char **env, char *program_name, int mode)
 		if (mode == 1)
 			write(STDOUT_FILENO, "\033[0;36mhsh# \033[0m", 16);
 		signal(SIGINT, ctrl_c);
-		if (mode == 1)
-			status = getline(&buffer, &len, stdout);
-		else
-			status = getline(&buffer, &len, stdin);
+		status = getline(&buffer, &len, stdin);
 		if (status == -1)
 		{
 			if (status == EOF)
