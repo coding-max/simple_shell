@@ -32,7 +32,7 @@ A command line always ends with a new line and the prompt is displayed again eac
 | Handles the `Ctrl + C` signal to not kill the program.                |                                            | :white_check_mark: |
 | Handles comments `(#)`                                                |`ls #-la /tmp`, `#pwd`                      | :white_check_mark: |
 |Handles errors.                                                        |                                            | :on:               |
-|Handles `help` buit-in command that prints information about builtin commands  | `help help`, `help env`            | :white_check_mark: |
+|Handles `help` buit-in command that prints information about builtin commands  | `help help`, `help exit`           | :white_check_mark: |
 |Handles `exit` buit-in command that exits the shell                    | `exit`                                     | :on:               |
 |Handles `env` buit-in command that prints the current environment      | `env`                                      | :on:               |
 
