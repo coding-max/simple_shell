@@ -16,25 +16,25 @@ The program was written in C and is part of the low-level programming trak at [H
 The **simple_shell** was coded on an Ubuntu 14.04 LTS machine with gcc version 4.8.4.  
 The code compile with `gcc -Wall -Werror -Wextra -pedantic *.c -o hsh` command.  
 
-> Some functionalities are still under development and contain errors, their status is indicated below in the description
+> Some functionalities are still under development and contain errors, their status is indicated below.
 
 ### Features
 
 In interactive mode the **simple_shell** displays a prompt (>) and wait for the user to type a command.  
 A command line always ends with a new line and the prompt is displayed again each time a command has been executed.  
 
-|                                                                       |EXAMPLE                            | STATUS
-|-----------------------------------------------------------------------|-----------------------------------|---------------------------------|
-| Handles simple commands                                               |`/bin/ls`, `/usr/bin/pwd`          | :white_check_mark: `No issues`  |
-| Handles the `PATH`                                                    |`ls`, `pwd`, `whoami`              | :on: `Some issues`              |
-| Handles command lines with arguments                                  |`/bin/ls -las`, `ls -l /tmp`, `cat shell.h` | :white_check_mark: `No issues` |
-| Handles the `Ctrl + D` condition (end-of-file) to exit the program.   |                                   | :white_check_mark:`No issues`   |
-| Handles the `Ctrl + C` signal to not kill the program.                |                                   | :white_check_mark:`No issues`   |
-| Handles comments `(#)`                                                |`ls #-la /tmp`, `#pwd`             | :white_check_mark:`No issues`   |
-|Handles errors.                                                        |                                   | :on:`Some issues`               |
-|Handles `help` buit-in command that prints information about builtin commands  | `help help`, `help env`   | :white_check_mark:`No issues`   |
-|Handles `exit` buit-in command that exits the shell                    | `exit`                            | :on:`Some issues`               |
-|Handles `env` buit-in command that prints the current environment      | `env`                             | :on:`Some issues`               |
+|                                                                       |EXAMPLE                                     | STATUS
+|-----------------------------------------------------------------------|--------------------------------------------|--------------------|
+| Handles simple commands                                               |`/bin/ls`, `/usr/bin/pwd`                   | :white_check_mark: |
+| Handles the `PATH`                                                    |`ls`, `pwd`, `whoami`                       | :on:               |
+| Handles command lines with arguments                                  |`/bin/ls -las`, `ls -l /tmp`, `cat shell.h` | :white_check_mark: |
+| Handles the `Ctrl + D` condition (end-of-file) to exit the program.   |                                            | :white_check_mark: |
+| Handles the `Ctrl + C` signal to not kill the program.                |                                            | :white_check_mark: |
+| Handles comments `(#)`                                                |`ls #-la /tmp`, `#pwd`                      | :white_check_mark: |
+|Handles errors.                                                        |                                            | :on:               |
+|Handles `help` buit-in command that prints information about builtin commands  | `help help`, `help env`            | :white_check_mark: |
+|Handles `exit` buit-in command that exits the shell                    | `exit`                                     | :on:               |
+|Handles `env` buit-in command that prints the current environment      | `env`                                      | :on:               |
 
 ### Examples
 
@@ -66,4 +66,4 @@ coding-max@hbtn:~/simple_shell$
 
 [Maximiliano Pan](https://github.com/coding-max) & [Alina De Los Santos](https://github.com/alina-delossantos)  
 
-This project is licensed under the MIT License - see the  [LICENSE](https://github.com/coding-max/simple_shell/blob/main/LICENSE)  file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/coding-max/simple_shell/blob/main/LICENSE) file for details.
