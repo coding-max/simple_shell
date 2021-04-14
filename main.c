@@ -120,9 +120,7 @@ int execute_command(char *new_buffer, list_t *path, char **env,
 {
 	char *tmp_buffer, *current_buffer;
 	char **input;
-	int i, aux, current, status, exe_result = 0;
-	struct stat stat_status;
-	pid_t pid = getpid();
+	int i, aux, current, exe_result = 0;
 
 	current = 0;
 	while (current < final)

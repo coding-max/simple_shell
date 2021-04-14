@@ -1,0 +1,36 @@
+LESSOPEN=| /usr/bin/lesspipe %s				      |	SHELL=/bin/bash
+USER=pxnmatz						      <
+SHLVL=1							      <
+WT_PROFILE_ID={07b52e3e-de2c-5db4-bd2d-ba144ed6c273}	      <
+MOTD_SHOWN=update-motd					      <
+HOME=/home/pxnmatz					      <
+OLDPWD=/home/pxnmatz/Holberton/simple_shell		      <
+WSL_DISTRO_NAME=Ubuntu-20.04					WSL_DISTRO_NAME=Ubuntu-20.04
+LOGNAME=pxnmatz						      <
+NAME=DESKTOP-7AK6NQS					      <
+WSL_INTEROP=/run/WSL/15205_interop			      <
+_=/usr/bin/sh						      <
+TERM=xterm-256color					      <
+PATH=/home/pxnmatz/.npm-global/bin:/usr/local/sbin:/usr/local <
+WT_SESSION=b23d76cd-cb9a-4583-a427-55b6007b6194			WT_SESSION=b23d76cd-cb9a-4583-a427-55b6007b6194
+							      >	NAME=DESKTOP-7AK6NQS
+							      >	PWD=/home/pxnmatz/Holberton/simple_shell/tests
+							      >	LOGNAME=pxnmatz
+							      >	MOTD_SHOWN=update-motd
+							      >	HOME=/home/pxnmatz
+LANG=C.UTF-8							LANG=C.UTF-8
+							      >	WSL_INTEROP=/run/WSL/15205_interop
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=0	LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=0
+SHELL=/bin/bash						      <
+LESSCLOSE=/usr/bin/lesspipe %s %s				LESSCLOSE=/usr/bin/lesspipe %s %s
+PWD=/home/pxnmatz/Holberton/simple_shell/tests		      |	TERM=xterm-256color
+							      >	LESSOPEN=| /usr/bin/lesspipe %s
+							      >	USER=pxnmatz
+							      >	SHLVL=1
+							      >	WSLENV=WT_SESSION::WT_PROFILE_ID
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desk	XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desk
+							      >	PATH=/home/pxnmatz/.npm-global/bin:/usr/local/sbin:/usr/local
+HOSTTYPE=x86_64							HOSTTYPE=x86_64
+WSLENV=WT_SESSION::WT_PROFILE_ID			      |	WT_PROFILE_ID={07b52e3e-de2c-5db4-bd2d-ba144ed6c273}
+							      >	OLDPWD=/home/pxnmatz/Holberton/simple_shell
+							      >	_=./hsh
