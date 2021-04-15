@@ -1,1 +1,73 @@
-.TH _SIMPLE_SHELL "April/2021" "Maximiliano Pan & Alina De Los Santos" "manpage simple_shell"
+.TH HSH 1 "April 2021" "Holberton School"
+.P
+
+.SH NAME
+.B hsh \- simple UNIX command interpreter (shell).
+
+.SH SYNOPSIS
+.B Execute the shell: ./hsh
+
+.SH DESCRIPTION
+.B hsh is a simple UNIX command interpreter that reads commands from standard input and executes them, simulating the behavior of the sh (/bin/sh) command interpreter (shell).
+
+Features:
+.RS
+.nf
+- Handles simple commands.
+- Handles the PATH.
+- Handles command lines with arguments.
+- Handles the Ctrl + D condition (end-of-file) to exit the program.
+- Handles the Ctrl + C signal to not kill the program.
+- Handles comments (#).
+- Handles errors.
+.RE
+
+Built-in commands:
+.RS
+.nf
+- Handles help buit-in command that prints information about builtin commands.
+- Handles exit buit-in command that exits the shell.
+- Handles env buit-in command that prints the current environment.
+.RE
+
+.SH EXAMPLES
+
+.B 
+hsh should work like this in interactive mode:
+.in +3n
+.nf
+$ ./hsh
+hsh> /bin/ls
+README.md main.c shell.h
+hsh>
+hsh> exit
+$
+.in
+
+
+.B
+hsh should work like this in non-interactive mode:
+.in +3n
+.nf
+$ echo "/bin/ls" | ./hsh
+README.md main.c shell.h
+$ echo "pwd" | ./hsh
+/root
+$
+.in
+
+.SH BUGS
+The following features presents issues:
+.RS
+.nf
+- Handles the PATH.
+- Handles errors.
+- Handles exit buit-in.
+- Handles env buit-in.
+.RE
+
+.SH SEE ALSO
+execve(2), fork(2), free(3), getline(3), getpid(2), isatty(3), malloc(3), perror(3), sh(1), signal(2), stat(2), strtok(3), wait(2), write(2).
+
+.SH AUTHOR
+Maximiliano Pan and Alina De Los Santos
